@@ -3,10 +3,9 @@ var Tell = new cLASS({
   supertypeName: "eVENT",
   shortLabel: "tell",
   properties: {
-    "barrier": { range: "Barrier" },
+    "lengthSymbol": { range: "PositiveInteger" },
     "speaker": { range: "Speaker" },
     "jumper": { range: "Jumper" }
-    //"matrix" : {range: "Matrix3_4"}
   },
   methods: {
     "onEvent": function () {
