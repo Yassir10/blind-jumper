@@ -8,34 +8,33 @@
  Simulation Parameters
 ********************************************************/
 sim.scenario.simulationEndTime = 50;
-//sim.scenario.randomSeed = 5;  // optional
+sim.scenario.randomSeed = 5;  // optional
 sim.config.createLog = true;
+//sim.config.stepDuration = 1000;
 
 /*******************************************************
  Simulation Model
 ********************************************************/
 sim.model.time = "discrete"; // implies using only discrete random variables
-
-sim.model.objectTypes = ["Jumper", "Speaker","Barrier", "Matrix3_4"];
+sim.model.v.alpha = 0.5;
+sim.model.objectTypes = ["Jumper", "Speaker","Barrier"];
 sim.model.eventTypes = ["Tell", "BarrierChange", "Jump"];
 
 //sim.model.v.jumpLength = "A";
-sim.model.v.alpha=0.2;
+//sim.model.v.alpha=0.2;
 /*******************************************************
  Define the initial state
  ********************************************************/
 sim.scenario.initialState.objects = {
-  "1": {typeName: "Jumper", name:"James", shortLabel:"james"},
+  "1": {typeName: "Jumper", name:"James", shortLabel:"james", position:1},
   "2": {typeName: "Speaker", name:"Pedro", shortLabel:"pedro", barrier:"3"},
   "3": {typeName: "Barrier", name:"barrier", shortLabel:"bar", length:2},
-  "4" : {typeName: "Matrix3_4", name:"matrix3_4", shortLabel:"mtrx", A1:0.25, A2:0.25, A3:0.25, A4:0.25,
-  B1:0.25, B2:0.25, B3:0.25, B4:0.25, C1:0.25, C2:0.25, C3:0.25, C4:0.25}
 };
 
 sim.scenario.initialState.events = [
   {typeName: "BarrierChange", occTime: 1, barrier: "3"},
-  {typeName: "Tell", occTime: 1, barrier: "3", speaker: "2", jumper: "1"},
-  {typeName: "Jump", occTime: 1, barrier: "3", jumper:"1", jumpSuccessProbMat:"4" }
+  {typeName: "Tell", occTime: 1, speaker: "2", jumper: "1"},
+  {typeName: "Jump", occTime: 1, barrier: "3", jumper:"1", speaker:"2" }
 ];
 
 
@@ -60,7 +59,7 @@ sim.config.observationUI.fixedElements = {
   }
 };
 sim.config.observationUI.objectViews = {
-  "serviceDesk1": [  // a view of the queue
+  "blindJumper2": [  
     { shapeName: "rect",  // a rectangle defined by
       shapeAttributes: {  // left-upper corner (x,y) as well as width and height
         x: function (sd) {return Math.max( 0, 330 - sd.queueLength * 20);},

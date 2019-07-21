@@ -3,16 +3,18 @@ var Tell = new cLASS({
   supertypeName: "eVENT",
   shortLabel: "tell",
   properties: {
-    "barrier": { range: "Barrier" },
     "speaker": { range: "Speaker" },
     "jumper": { range: "Jumper" }
-    //"matrix" : {range: "Matrix3_4"}
   },
   methods: {
     "onEvent": function () {
-      //this.barrier.change();
-   // if(this.occTime == 1) console.log(this.matrix.print());
-      this.jumper.code = this.speaker.defineCode( this.barrier.length );
+      this.speaker.rowSpeaker = this.speaker.barrier.length;
+      this.speaker.colSpeaker = Jump.maxIndex(this.speaker.jumpSuccessProbMat, this.speaker.rowSpeaker);
+
+      this.jumper.lengthSymbol =
+          ((this.speaker.colSpeaker === 1 ) ? "A" : (this.speaker.colSpeaker === 2) ? "B" : "C");
+
+      //this.jumper.lengthSymbol = this.speaker.defineLengthSymbol(this.speaker.colSpeaker );
       return [];
     }
   }
@@ -23,9 +25,3 @@ Tell.priority = 1;
 Tell.recurrence = function () {
   return 1;  // better: exponential( 0.5)
 };
-// Speak.createNextEvent = function () {
-//   return new Speak( {
-//     occTime: this.occTime + Speak.recurrence(),
-//     barrier: this.barrier
-//   } );
-// };
