@@ -38,6 +38,7 @@ sim.scenario.initialState.events = [
 ];
 
 
+
 /*******************************************************
  Define Output Statistics Variables
  ********************************************************/
@@ -59,7 +60,7 @@ sim.config.observationUI.fixedElements = {
   }
 };
 sim.config.observationUI.objectViews = {
-  "blindJumper2": [  
+  "blindJumper2": [
     { shapeName: "rect",  // a rectangle defined by
       shapeAttributes: {  // left-upper corner (x,y) as well as width and height
         x: function (sd) {return Math.max( 0, 330 - sd.queueLength * 20);},
