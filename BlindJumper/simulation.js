@@ -38,7 +38,6 @@ sim.scenario.initialState.events = [
 ];
 
 
-
 /*******************************************************
  Define Output Statistics Variables
  ********************************************************/
