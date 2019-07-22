@@ -1,40 +1,30 @@
-var Jump = new cLASS({
+let Jump = new cLASS({
   Name: "Jump",
   supertypeName: "eVENT",
   shortLabel: "jump",
   properties: {
     "barrier": {range: "Barrier"},
     "jumper": {range: "Jumper"},
-    "currentJumpRuleStateIndex" : {range:"NonNegativeInteger", initialValue: 0},
-    "currentJumpRuleActionIndex" : {range:"NonNegativeInteger", initialValue: 0},
-    "jumpSuccessProbMat" : {range: "Matrix3_4"}
+    "speaker": {range: "Speaker"}
   },
   methods: {
     "onEvent": function () {
-     var P = [[0.25, 0.25, 0.25], [0.25, 0.25, 0.25], [0.25, 0.25, 0.25]];
-      if (this.occTime === 1) {
-        //this.jumpSuccessProbMat.print();
-        this.jumpSuccessProbMat.normalize(1);
-        this.jumpSuccessProbMat.print(P)
-        //console.log(Jump.maxIndex(P, 2));
-      }
-      var row = ((this.jumper.code === "A") ? 1 : ( this.jumper.code === "B") ? 2 : 3);
-      this.currentJumpRuleStateIndex = ((this.jumper.code === "A") ? 1 : (this.jumper.code) === "B" ? 2 : 3);
-      this.currentJumpRuleActionIndex = ( this.jumpSuccessProbMat.maxIndex( row));
-      var jumpLength = this.currentJumpRuleActionIndex+1;
-      console.log(this.occTime);
+      let rowJumper = ((this.jumper.lengthSymbol === "A") ? 1 : (this.jumper.lengthSymbol === "B") ? 2 : 3);
+      let colJumper = Jump.maxIndex( this.jumper.jumpSuccessProbMat, rowJumper);
 
-      console.log(jumpLength+", "+this.barrier.length);
-      if(jumpLength>this.barrier.length){
-        console.log("haha1");
-        this.jumpSuccessProbMat.successUpdate(row, jumpLength-1);
+//      this.jumper.jumpLength = colJumper-1;
+
+      if(colJumper-1 === this.barrier.length){
+        Jump.successUpdate(this.jumper.jumpSuccessProbMat,  rowJumper, colJumper);
+        Jump.successUpdate(this.speaker.jumpSuccessProbMat,  this.speaker.rowSpeaker, this.speaker.colSpeaker);
       } else{
-        console.log("haha2");
-        this.jumpSuccessProbMat.failureUpdate(row, jumpLength-1);
-
+        Jump.failureUpdate(this.jumper.jumpSuccessProbMat, rowJumper, colJumper);
+        Jump.failureUpdate(this.speaker.jumpSuccessProbMat,  this.speaker.rowSpeaker, this.speaker.colSpeaker);
       }
-      this.jumpSuccessProbMat.print();
-      //var x = this.jumper.code;
+
+      this.jumper.jump();
+      this.jumper.reset();
+
       return [];
     }
   }
@@ -45,14 +35,13 @@ Jump.priority = 0;
 Jump.recurrence = function () {
   return 1;  // better: exponential( 0.5)
 };
-/*
+
 Jump.print = function (P){
-  console.log(P);
-  var M = P.length; 	  // number of rows
-  var N = P[0].length;    // number of columns
-  var i, j;
+  let M = P.length; 	  // number of rows
+  let N = P[0].length;    // number of columns
+  let i, j;
+  let outputMess = "";
   for (i = 0; i < M; i++) {
-    var outputMess = "";
     for (j = 0; j < N; j++) {
       outputMess += (P[i][j] + " ");
     }
@@ -62,8 +51,8 @@ Jump.print = function (P){
 };
 
 Jump.normalize = function (P, row) {
-  var rowSum = 0;
-  var j;
+  let rowSum = 0;
+  let j;
   for (j = 0; j < P[row].length; j++) {
     rowSum = rowSum + P[row][j];
   }
@@ -72,37 +61,37 @@ Jump.normalize = function (P, row) {
   }
 };
 Jump.maxIndex = function (P, r) {
-  var row = r - 1;
-  var j, max = 0;
+  let row = r - 1;
+  let j, max = 0;
   for (j = 1; j < P[row].length; j++) {
     if (P[row][j] > P[row][max]) {
       max = j;
     }
   }
+  //console.log("maximum: "+(max+1));
   return (max + 1);
 };
 Jump.successUpdate = function (P, r, c) {
-  var row = r - 1;
-  var col = c - 1;
-  var j;
-  P[row][col] = P[row][col] * (1 + sim.controller.Global.alpha);
+  let row = r - 1, col = c - 1, j;
+  //console.log("bou7dha1: "+sim.v.alpha);
+  P[row][col] = P[row][col] * (1 + 0.5);//sim.v.alpha);
+  //console.log("bou7dha2: "+P[row][col]);
   for (j = 0; j < P[row].length; j++) {
-    if (j != col) {
-      P[row][j] = (1 - sim.controller.Global.alpha) * P[row][j];
+    if (j !== col) {
+      P[row][j] = (1 - 0.5/*sim.v.alpha*/) * P[row][j];
     }
   }
   this.normalize(P, row);
 };
 Jump.failureUpdate = function (P, r, c) {
-  var row = r - 1;
-  var col = c - 1;
-  var j;
-  P[row][col] = P[row][col] * (1 - sim.controller.Global.alpha);
+  let row = r - 1, col = c - 1, j;
+  //console.log("bou7dha1: "+sim.v.alpha);
+  P[row][col] = P[row][col] * (1 - 0.5);
+  //console.log("bou7dha2: "+P[row][col]);
   for (j = 0; j < P[row].length; j++) {
-    if (j != col) {
-      P[row][j] = (1 + sim.controller.Global.alpha) * P[row][j];
+    if (j !== col) {
+      P[row][j] = (1 + 0.5) * P[row][j];
     }
   }
   this.normalize(P, row);
 };
-*/
