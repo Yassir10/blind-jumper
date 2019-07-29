@@ -1,4 +1,4 @@
-var BarrierChange = new cLASS({
+let BarrierChange = new cLASS({
   Name: "BarrierChange",
   supertypeName: "eVENT",
   shortLabel: "barChng",
@@ -18,5 +18,5 @@ var BarrierChange = new cLASS({
 BarrierChange.priority = 2;
 
 BarrierChange.recurrence = function () {
-  return 1;  // better: exponential( 0.5)
+  return 3;  // better: exponential( 0.5)
 };

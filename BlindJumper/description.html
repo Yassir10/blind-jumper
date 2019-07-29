@@ -1,14 +1,13 @@
 <!-- ===========================================================================
- * Inventory-1 - An Object Event Simulation Model
- * @copyright Copyright 2016 Gerd Wagner, BTU (Germany) + ODU (VA, USA)
- * @author Gerd Wagner
- * @license The MIT License (MIT)
+ * The blind jumper - An Object Event Simulation Model
+ * @copyright Copyright 2016 Yassir Sellal, BTU (Germany) + ODU (VA, USA)
+ * @author Yassir Sellal
 ================================================================================ -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>OES - Inventory Management with a Continuous Replenishment Policy</title>
+  <title>OES - The blind jumper game</title>
   <meta name="viewport" content="width=device-width, initial-scale = 1.0" />
   <link rel="stylesheet" href="../../../../css/normalize.min.css" />
   <link rel="stylesheet" href="../../../../css/description.css" />
@@ -17,7 +16,7 @@
 </head>
 <body onload="oes.ui.setupDescription()">
  <div id="frontMatter">
-  <h1>Inventory Management with a Continuous Replenishment Policy</h1>
+  <h1>The Blind Jumper: Emerging Semantics through Reinforcement Learning</h1>
   <p><strong>Classification tags</strong>: business operations management, DES, next-event time progression</p>
   <figure class="right"><img src="media/img/theme-image.svg" alt="" width="240" /></figure>
   <section id="shortDescription"></section>
@@ -31,11 +30,9 @@
 
      <p>The potentially relevant object types are:</p>
      <ol>
-       <li>shops,</li>
-       <li>products,</li>
-       <li>inventories,</li>
-       <li>customers,</li>
-       <li>vendors,</li>
+       <li>barriers,</li>
+       <li>Speakers,</li>
+       <li>jumpers,</li>
        <li>...</li>
      </ol>
      <!--
@@ -46,14 +43,18 @@
      -->
      <p>Potentially relevant types of events are:</p>
      <ol>
-       <li>customer orders,</li>
-       <li>product handovers,</li>
-       <li>customer payments,</li>
-       <li>replenishment orders,</li>
-       <li>deliveries,</li>
-       <li>payments for deliveries,</li>
+       <li>barrier change,</li>
+       <li>jump,</li>
+       <li>tell,</li>
        <li>...</li>
      </ol>
+
+
+
+
+
+
+
      <p>These object and event types, with their participation associations, can be visually described in
        a UML class diagram, as shown below.</p>
      <figure>
