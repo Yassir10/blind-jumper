@@ -47,7 +47,7 @@ sim.model.statistics = {
 /*******************************************************
  Define an observation UI
  ********************************************************/
-sim.config.imgFolder = "media/img/";
+sim.config.imgFolder = "media/images/";
 sim.config.observationUI.type = "SVG";
 sim.config.observationUI.canvas.width = 700;
 sim.config.observationUI.canvas.height = 300;
