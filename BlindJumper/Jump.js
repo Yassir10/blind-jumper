@@ -11,13 +11,14 @@ let Jump = new cLASS({
     "onEvent": function () {
       let rowJumper = ((this.jumper.lengthSymbol === "A") ? 1 : (this.jumper.lengthSymbol === "B") ? 2 : 3);
       let colJumper = Jump.maxIndex( this.jumper.jumpSuccessProbMat, rowJumper);
-
       this.jumper.jumpLength = colJumper-1;
-
-      if(colJumper-1 === this.barrier.length){
+      if(this.jumper.jumpLength === this.barrier.length){
         Jump.successUpdate(this.jumper.jumpSuccessProbMat,  rowJumper, colJumper);
+        Jump.successUpdate(this.speaker.jumpSuccessProbMat, this.speaker.rowJumper, this.speaker.colJumper);
       } else{
         Jump.failureUpdate(this.jumper.jumpSuccessProbMat, rowJumper, colJumper);
+        Jump.failureUpdate(this.speaker.jumpSuccessProbMat, this.speaker.rowJumper, this.speaker.colJumper);
+
       }
       this.jumper.jump();
       this.jumper.reset();
@@ -27,7 +28,7 @@ let Jump = new cLASS({
   }
 });
 // Any exogenous event type needs to define a static function "recurrence"
-Jump.priority = 0;
+//Jump.priority = 0;
 
 Jump.recurrence = function () {
   return 3;  // better: exponential( 0.5)
@@ -79,6 +80,7 @@ Jump.successUpdate = function (P, r, c) {
     }
   }
   this.normalize(P, row);
+  Jump.print(P);
 };
 Jump.failureUpdate = function (P, r, c) {
   let row = r - 1, col = c - 1, j;
@@ -91,4 +93,5 @@ Jump.failureUpdate = function (P, r, c) {
     }
   }
   this.normalize(P, row);
+  Jump.print(P);
 };

@@ -15,7 +15,7 @@ let BarrierChange = new cLASS({
   }
 });
 
-BarrierChange.priority = 2;
+//BarrierChange.priority = 2;
 
 BarrierChange.recurrence = function () {
   return 3;  // better: exponential( 0.5)

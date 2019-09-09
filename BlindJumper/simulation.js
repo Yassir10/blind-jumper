@@ -7,7 +7,7 @@
 /*******************************************************
  Simulation Parameters
 ********************************************************/
-sim.scenario.simulationEndTime = 50;
+sim.scenario.simulationEndTime = 200;
 sim.scenario.randomSeed = 5;  // optional
 sim.config.createLog = true;
 //sim.config.stepDuration = 1000;
@@ -57,6 +57,7 @@ sim.config.observationUI.fixedElements = {
   }
 };
 sim.config.observationUI.objectViews = {
+  /*
   "serviceDesk1": [  // a view of the queue
     { shapeName: "rect",  // a rectangle defined by
       shapeAttributes: {  // left-upper corner (x,y) as well as width and height
@@ -70,6 +71,27 @@ sim.config.observationUI.objectViews = {
       shapeAttributes: {x: 325, y: 250,
           textContent: function (sd) {return sd.queueLength;}},
       style:"font-size:14px; text-anchor:middle"
+    }
+  ]*/
+  "blind-jumper-2": [  // a view of the queue
+    { shapeName: "rect",  // a rectangle defined by
+      shapeAttributes: {  // left-upper corner (x,y) as well as width and height
+        x: 80,
+        y: 150,
+        width: 120,
+        height: 80
+      },
+      style:"fill:yellow; stroke-width:0"
+    },
+    {
+      shapeName: "rect",
+      shapeAttributes: {
+        x: 100,
+        y: 140,
+        width: 10,
+        height: 10,
+      },
+      style: "fill:black; stroke-width:0"
     }
   ]
 };
