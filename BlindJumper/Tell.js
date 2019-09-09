@@ -8,13 +8,13 @@ var Tell = new cLASS({
   },
   methods: {
     "onEvent": function () {
-      console.log(this.occTime+": ");
-      //this.jumper.lengthSymbol = this.speaker.defineLengthSymbol( this.speaker.barrier.length);//colSpeaker );
+      this.speaker.rowSpeaker = this.speaker.barrier.length;
+      this.speaker.colSpeaker = Tell.maxIndex(this.speaker.jumpSuccessProbMat, this.speaker.rowSpeaker);
 
-       this.speaker.rowJumper = this.speaker.barrier.length;
-       this.speaker.colJumper = Tell.maxIndex( this.speaker.jumpSuccessProbMat, this.speaker.rowJumper);
-      this.jumper.lengthSymbol = (this.speaker.colJumper === 1) ? "A" : (this.speaker.colJumper === 2) ? "B" : "C";
+      this.jumper.lengthSymbol =
+          ((this.speaker.colSpeaker === 1 ) ? "A" : (this.speaker.colSpeaker === 2) ? "B" : "C");
 
+      //this.jumper.lengthSymbol = this.speaker.defineLengthSymbol(this.speaker.colSpeaker );
 
       return [];
     }

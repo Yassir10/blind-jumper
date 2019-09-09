@@ -3,12 +3,12 @@ var Speaker = new cLASS({
   supertypeName: "oBJECT",
   properties: {
     "barrier": {range: "Barrier"},
-    "jumpSuccessProbMat" : {range: "Array", initialValue:[[0.33, 0.33, 0.33],
-        [0.33, 0.33, 0.33], [0.33, 0.33, 0.33]]},
-    rowJumper: {range: "PositiveInteger"},
-    colJumper: {range: "PositiveInteger"}
-
+    "jumpSuccessProbMat" : {range: "Array", initialValue:[[0.33,0.33,0.33],
+        [0.33,0.33,0.33], [0.33,0.33,0.33]]},
+    "colSpeaker": {range: "NonNegativeInteger"},
+    "rowSpaker": {range: "NonNegativeInteger"}
   },
+
   methods: {
     "defineLengthSymbol": function ( len ) {
       return String.fromCharCode( 64 + len );

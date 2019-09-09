@@ -5,20 +5,21 @@ let Jump = new cLASS({
   properties: {
     "barrier": {range: "Barrier"},
     "jumper": {range: "Jumper"},
-    "speaker": {range: "Speaker"}
+    "speaker": {range: "Speaker"},
+    "jumpLength": {range: "NonNegativeInteger"}
   },
   methods: {
     "onEvent": function () {
       let rowJumper = ((this.jumper.lengthSymbol === "A") ? 1 : (this.jumper.lengthSymbol === "B") ? 2 : 3);
       let colJumper = Jump.maxIndex( this.jumper.jumpSuccessProbMat, rowJumper);
-      this.jumper.jumpLength = colJumper-1;
-      if(this.jumper.jumpLength === this.barrier.length){
+      this.jumpLength = colJumper; //1,2,3 or 4
+      this.jumper.jumpLength = colJumper; //1,2,3 or 4
+      if(colJumper-1 === this.barrier.length){
         Jump.successUpdate(this.jumper.jumpSuccessProbMat,  rowJumper, colJumper);
-        Jump.successUpdate(this.speaker.jumpSuccessProbMat, this.speaker.rowJumper, this.speaker.colJumper);
+        Jump.successUpdate(this.speaker.jumpSuccessProbMat,  this.speaker.rowSpeaker, this.speaker.colSpeaker);
       } else{
         Jump.failureUpdate(this.jumper.jumpSuccessProbMat, rowJumper, colJumper);
-        Jump.failureUpdate(this.speaker.jumpSuccessProbMat, this.speaker.rowJumper, this.speaker.colJumper);
-
+        Jump.failureUpdate(this.speaker.jumpSuccessProbMat,  this.speaker.rowSpeaker, this.speaker.colSpeaker);
       }
       this.jumper.jump();
       this.jumper.reset();

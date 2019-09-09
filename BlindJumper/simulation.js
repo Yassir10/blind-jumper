@@ -7,10 +7,12 @@
 /*******************************************************
  Simulation Parameters
 ********************************************************/
+
 sim.scenario.simulationEndTime = 200;
 sim.scenario.randomSeed = 5;  // optional
 sim.config.createLog = true;
-//sim.config.stepDuration = 1000;
+sim.config.visualize = true;
+
 /*******************************************************
  Simulation Model
 ********************************************************/
@@ -24,8 +26,8 @@ sim.model.eventTypes = ["Tell", "BarrierChange", "Jump"];
  Define the initial state
  ********************************************************/
 sim.scenario.initialState.objects = {
-  "1": {typeName: "Jumper", name:"James", shortLabel:"james", position:1},
-  "2": {typeName: "Speaker", name:"Pedro", shortLabel:"pedro", barrier:"3"},
+  "1": {typeName: "Jumper", name:"jumper", shortLabel:"jumper", position:1},
+  "2": {typeName: "Speaker", name:"speaker", barrier:"3"},
   "3": {typeName: "Barrier", name:"barrier", shortLabel:"bar", length:2},
 };
 
@@ -47,51 +49,66 @@ sim.model.statistics = {
  ********************************************************/
 sim.config.imgFolder = "media/img/";
 sim.config.observationUI.type = "SVG";
-sim.config.observationUI.canvas.width = 600;
+sim.config.observationUI.canvas.width = 700;
 sim.config.observationUI.canvas.height = 300;
+//sim.config.observationUI.canvas.style = "background-color:yellow";
+
 sim.config.observationUI.fixedElements = {
-  "speaker": {
-    shapeName: "image",
-    shapeAttributes: { x: 350, y: 200, width: 50, height: 30},
-    style: "fill:brown; stroke-width:0"
-  }
+  "ground": { 
+      shapeName: "line",  
+      shapeAttributes: {  
+        x1: 10, y1: 260, 
+        x2: 610, y2: 260
+      },
+      style:"stroke:grey; stroke-width:10"
+  }    
 };
 sim.config.observationUI.objectViews = {
-  /*
-  "serviceDesk1": [  // a view of the queue
-    { shapeName: "rect",  // a rectangle defined by
-      shapeAttributes: {  // left-upper corner (x,y) as well as width and height
-        x: function (sd) {return Math.max( 0, 330 - sd.queueLength * 20);},
-        width: function (sd) {return Math.min( 300, sd.queueLength * 20);},
-        y: 150, height: 80
-      },
-      style:"fill:yellow; stroke-width:0"
-    },
-    { shapeName: "text",
-      shapeAttributes: {x: 325, y: 250,
-          textContent: function (sd) {return sd.queueLength;}},
-      style:"font-size:14px; text-anchor:middle"
-    }
-  ]*/
-  "blind-jumper-2": [  // a view of the queue
-    { shapeName: "rect",  // a rectangle defined by
-      shapeAttributes: {  // left-upper corner (x,y) as well as width and height
-        x: 80,
-        y: 150,
-        width: 120,
-        height: 80
-      },
-      style:"fill:yellow; stroke-width:0"
-    },
-    {
-      shapeName: "rect",
+  "jumper": { 
+      shapeName: "image",  
       shapeAttributes: {
-        x: 100,
-        y: 140,
-        width: 10,
-        height: 10,
-      },
-      style: "fill:black; stroke-width:0"
+        id: "jumperView",
+        file: sim.config.imgFolder + "blind-man.png",
+        x: 10, y: 112,   // left-upper corner (x,y)
+        width: 154, height: 138
+      }
+  },
+  "barrier": [  
+    { shapeName: "rect",  
+      shapeAttributes: {  
+        x: 200, y: 200,  // left-upper corner (x,y) 
+        width: function (b) {return b.length * 50;},
+        height: 50
+      }
     }
-  ]
+  ],
+  "speaker": {
+      shapeName: "image",
+      shapeAttributes: { 
+        file: sim.config.imgFolder + "cartoon-man-wearing-suit.png", 
+        x: 500, y:119, width: 107, height: 131
+      }
+  }
+};
+sim.config.observationUI.eventAppearances = {
+  /* TODO: support temporary visibility of DOM elements
+  "Tell": {
+    //sound: {duration: 1000, source:"12/300/80 14/200/90"},
+    view: {  // an event view is a web animation of a DOM element
+      shapeName: "text",
+      shapeAttributes: {x: 500, y: 100,
+          textContent: function (e) {return e.lengthSymbol;}},
+      style:"font-size:14px; text-anchor:middle",
+      keyframes: [{color:'black'}, {color:'white'}],
+      duration: 1000,  // ms
+    }
+  },
+ */
+  "Jump": {
+    view: {  // an event view is a web animation of a DOM element
+      domElem: function () {return document.getElementById("jumperView");},  // the visualization container element
+      keyframes: [{x:100}, {x: function (e) {return e.jumpLength;}}],
+      duration: 1000  // ms
+    }
+    }
 };

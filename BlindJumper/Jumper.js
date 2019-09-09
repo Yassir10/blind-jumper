@@ -6,18 +6,15 @@ var Jumper = new cLASS({
     "jumpLength": {range: "PositiveInteger", initialValue:1},
     "jumpSuccessProbMat" : {range: "Array", initialValue:[[0.25, 0.25, 0.25, 0.25],
         [0.25, 0.25, 0.25, 0.25], [0.25, 0.25, 0.25, 0.25]]},
-    "position": {range:"NonNegativeInteger", minValue:0, maxValue:4},
+    "position": {range:"PositiveInteger", minValue:1, maxValue:5},
   },
   methods: {
     "jump": function () {
-      console.log("length Symbol: "+this.lengthSymbol);
-      console.log("Jump length: "+this.jumpLength);
-      this.position = this.jumpLength+1;
-      console.log("Position: "+ this.position);
+      this.position = this.jumpLength;
     },
 
     "reset": function(){
-      this.position = 0;
+      this.position = 1;
     }
   }
 
