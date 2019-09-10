@@ -6,24 +6,22 @@ let Jump = new cLASS({
     "barrier": {range: "Barrier"},
     "jumper": {range: "Jumper"},
     "speaker": {range: "Speaker"},
-    "jumpLength": {range: "NonNegativeInteger"}
   },
   methods: {
     "onEvent": function () {
-      let rowJumper = ((this.jumper.lengthSymbol === "A") ? 1 : (this.jumper.lengthSymbol === "B") ? 2 : 3);
-      let colJumper = Jump.maxIndex( this.jumper.jumpSuccessProbMat, rowJumper);
-      this.jumpLength = colJumper; //1,2,3 or 4
-      this.jumper.jumpLength = colJumper; //1,2,3 or 4
+      let rowJumper = ((this.jumper.lengthSymbol === "A") ? 1 : (this.jumper.lengthSymbol === "B") ? 2 : 3),
+        colJumper = Jump.maxIndex( this.jumper.tellSuccessProbMat, rowJumper);
       if(colJumper-1 === this.barrier.length){
-        Jump.successUpdate(this.jumper.jumpSuccessProbMat,  rowJumper, colJumper);
-        Jump.successUpdate(this.speaker.jumpSuccessProbMat,  this.speaker.rowSpeaker, this.speaker.colSpeaker);
+        Jump.successUpdate(this.jumper.tellSuccessProbMat,  rowJumper, colJumper);
+        Jump.successUpdate(this.speaker.tellSuccessProbMat,  this.speaker.rowSpeaker, this.speaker.colSpeaker);
       } else{
-        Jump.failureUpdate(this.jumper.jumpSuccessProbMat, rowJumper, colJumper);
-        Jump.failureUpdate(this.speaker.jumpSuccessProbMat,  this.speaker.rowSpeaker, this.speaker.colSpeaker);
+        Jump.failureUpdate(this.jumper.tellSuccessProbMat, rowJumper, colJumper);
+        Jump.failureUpdate(this.speaker.tellSuccessProbMat,  this.speaker.rowSpeaker, this.speaker.colSpeaker);
       }
-      this.jumper.jump();
+      this.jumper.jump(colJumper+1);
       this.jumper.reset();
-
+    console.log(this.barrier.length+"---"+(colJumper+1));
+    console.log(this.barrier.length+"="+(this.jumper.lengthSymbol));
       return [];
     }
   }
@@ -81,7 +79,7 @@ Jump.successUpdate = function (P, r, c) {
     }
   }
   this.normalize(P, row);
-  Jump.print(P);
+  //Jump.print(P);
 };
 Jump.failureUpdate = function (P, r, c) {
   let row = r - 1, col = c - 1, j;
@@ -94,5 +92,5 @@ Jump.failureUpdate = function (P, r, c) {
     }
   }
   this.normalize(P, row);
-  Jump.print(P);
+  //Jump.print(P);
 };

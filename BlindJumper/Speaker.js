@@ -3,7 +3,7 @@ var Speaker = new cLASS({
   supertypeName: "oBJECT",
   properties: {
     "barrier": {range: "Barrier"},
-    "jumpSuccessProbMat" : {range: "Array", initialValue:[[0.33,0.33,0.33],
+    "tellSuccessProbMat" : {range: "Array", initialValue:[[0.33,0.33,0.33],
         [0.33,0.33,0.33], [0.33,0.33,0.33]]},
     "colSpeaker": {range: "NonNegativeInteger"},
     "rowSpaker": {range: "NonNegativeInteger"}

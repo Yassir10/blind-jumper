@@ -28,6 +28,6 @@ sim.model.shortDescription = "<p>In this model on multi-agent reinforcement lear
     "'it is too short or too long), and then update their signal interpretation function accordingly.</p>";
 sim.model.license = "CC BY-NC";
 sim.model.creator = "Yassir Sellal";
-sim.model.created = "2018-07-15";
-sim.model.modified = "2016-11-14";
+sim.model.created = "2019-07-15";
+sim.model.modified = "2019-09-09";
 
