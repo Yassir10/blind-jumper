@@ -7,7 +7,7 @@
 /*******************************************************
  Simulation Parameters
 ********************************************************/
-
+sim.config.stepDuration = 100;
 sim.scenario.simulationEndTime = 200;
 sim.scenario.randomSeed = 5;  // optional
 sim.config.createLog = true;
@@ -17,18 +17,17 @@ sim.config.visualize = true;
  Simulation Model
 ********************************************************/
 sim.model.time = "discrete"; // implies using only discrete random variables
-sim.model.v.alpha = 0.5;
+sim.model.v.alpha = {
+  range:"PositiveInteger",
+  initialValue: 0.5,
+
+};
 sim.model.objectTypes = ["Jumper", "Speaker","Barrier"];
 sim.model.eventTypes = ["Tell", "BarrierChange", "Jump"];
-
-//sim.model.v.alpha=0.2;
 /*******************************************************
  Define the initial state
  ********************************************************/
 sim.scenario.initialState.objects = {
-  "1": {typeName: "Jumper", name:"jumper", shortLabel:"jumper", position:1},
-  "2": {typeName: "Speaker", name:"speaker", barrier:"3"},
-  "3": {typeName: "Barrier", name:"barrier", shortLabel:"bar", length:2},
 };
 
 sim.scenario.initialState.events = [
@@ -36,7 +35,16 @@ sim.scenario.initialState.events = [
   {typeName: "Tell", occTime: 2, speaker: "2", jumper: "1"},
   {typeName: "Jump", occTime: 3, barrier: "3", jumper:"1", speaker:"2" }
 ];
-
+sim.scenario.setupInitialState = function(){
+  var jumper = new Jumper({id: 1, name:"jumper", shortLabel:"jumper", position:0}),
+  speaker = new Speaker({id: 2, name:"speaker", barrier:"3"}),
+  barrier = new Barrier({id:3, name:"barrier", shortLabel:"bar", length:2});
+  sim.addObject(jumper);
+  sim.addObject(speaker);
+  sim.addObject(barrier);
+  jumper.jumpSuccessProbMat = new LearningMatrix(jumper.jumpSuccessProbMat);
+  speaker.tellSuccessProbMat = new LearningMatrix(speaker.tellSuccessProbMat);
+};
 
 /*******************************************************
  Define Output Statistics Variables
@@ -69,8 +77,10 @@ sim.config.observationUI.objectViews = {
       shapeAttributes: {
         id: "jumperView",
         file: sim.config.imgFolder + "blind-man.png",
-        x: 10, y: 112,   // left-upper corner (x,y)
-        width: 154, height: 138
+        x: function (j) {return (70 + j.position * 50);},
+        y: 142,   // left-upper corner (x,y)
+        width: 154,
+        height: 138
       }
   },
   "barrier": [  
@@ -86,29 +96,8 @@ sim.config.observationUI.objectViews = {
       shapeName: "image",
       shapeAttributes: { 
         file: sim.config.imgFolder + "cartoon-man-wearing-suit.png", 
-        x: 500, y:119, width: 107, height: 131
+        x: 500, y:129, width: 107, height: 131
       }
   }
 };
-sim.config.observationUI.eventAppearances = {
-  /* TODO: support temporary visibility of DOM elements
-  "Tell": {
-    //sound: {duration: 1000, source:"12/300/80 14/200/90"},
-    view: {  // an event view is a web animation of a DOM element
-      shapeName: "text",
-      shapeAttributes: {x: 500, y: 100,
-          textContent: function (e) {return e.lengthSymbol;}},
-      style:"font-size:14px; text-anchor:middle",
-      keyframes: [{color:'black'}, {color:'white'}],
-      duration: 1000,  // ms
-    }
-  },
- */
-  "Jump": {
-    view: {  // an event view is a web animation of a DOM element
-      domElem: function () {return document.getElementById("jumperView");},  // the visualization container element
-      keyframes: [{x:100}, {x: function (e) {return e.jumpLength;}}],
-      duration: 1000  // ms
-    }
-    }
-};
+
