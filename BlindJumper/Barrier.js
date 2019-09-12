@@ -6,9 +6,6 @@ var Barrier = new cLASS({
 
   },
   methods:{
-    "change" : function(){
-        this.length = rand.uniformInt(1, 3);
-    }
   }
 
 });

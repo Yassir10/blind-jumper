@@ -23,7 +23,7 @@ sim.model.v.alpha = {
 
 };
 sim.model.objectTypes = ["Jumper", "Speaker","Barrier"];
-sim.model.eventTypes = ["Tell", "BarrierChange", "Jump"];
+sim.model.eventTypes = ["Tell", "StartOver", "Jump"];
 /*******************************************************
  Define the initial state
  ********************************************************/
@@ -31,19 +31,19 @@ sim.scenario.initialState.objects = {
 };
 
 sim.scenario.initialState.events = [
-  {typeName: "BarrierChange", occTime: 1, barrier: "3"},
-  {typeName: "Tell", occTime: 2, speaker: "2", jumper: "1"},
-  {typeName: "Jump", occTime: 3, barrier: "3", jumper:"1", speaker:"2" }
+  {typeName: "StartOver", occTime: 1, barrier: 3, jumper: 1},
+  {typeName: "Tell", occTime: 2, speaker: 2, jumper: 1},
+  {typeName: "Jump", occTime: 3, barrier: 3, jumper: 1, speaker: 2 }
 ];
 sim.scenario.setupInitialState = function(){
-  var jumper = new Jumper({id: 1, name:"jumper", shortLabel:"jumper", position:0}),
+  var jumper = new Jumper({id: 1, name:"jumper", shortLabel:"jumper", position: 1}),
   speaker = new Speaker({id: 2, name:"speaker", barrier:"3"}),
-  barrier = new Barrier({id:3, name:"barrier", shortLabel:"bar", length:2});
+  barrier = new Barrier({id: 3, name:"barrier", shortLabel:"bar", length: 2});
   sim.addObject(jumper);
   sim.addObject(speaker);
   sim.addObject(barrier);
-  jumper.learnMatrix = new LearningMatrix(jumper.learnMatrix);
-  speaker.learnMatrix = new LearningMatrix(speaker.learnMatrix);
+  jumper.learnMatrix = new LearningMatrix( jumper.learnMatrix);
+  speaker.learnMatrix = new LearningMatrix( speaker.learnMatrix);
 };
 
 /*******************************************************
