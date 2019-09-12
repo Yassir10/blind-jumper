@@ -66,9 +66,8 @@ var Tell = new cLASS({
   methods: {
     "onEvent": function () {
       this.speaker.rowSpeaker = this.speaker.barrier.length;
-      this.speaker.colSpeaker = this.speaker.tellSuccessProbMat.maxColIndex( this.speaker.rowSpeaker);
-      this.jumper.lengthSymbol =
-          ((this.speaker.colSpeaker === 1 ) ? "A" : (this.speaker.colSpeaker === 2) ? "B" : "C");
+      this.speaker.colSpeaker = this.speaker.learnMatrix.maxColIndex( this.speaker.rowSpeaker);
+      this.jumper.receivedLengthSymbol = "ABC".charAt( this.speaker.colSpeaker - 1);
       return [];
     }
   }

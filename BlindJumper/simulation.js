@@ -42,8 +42,8 @@ sim.scenario.setupInitialState = function(){
   sim.addObject(jumper);
   sim.addObject(speaker);
   sim.addObject(barrier);
-  jumper.jumpSuccessProbMat = new LearningMatrix(jumper.jumpSuccessProbMat);
-  speaker.tellSuccessProbMat = new LearningMatrix(speaker.tellSuccessProbMat);
+  jumper.learnMatrix = new LearningMatrix(jumper.learnMatrix);
+  speaker.learnMatrix = new LearningMatrix(speaker.learnMatrix);
 };
 
 /*******************************************************

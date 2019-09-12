@@ -2,12 +2,11 @@ var Jumper = new cLASS({
   Name: "Jumper",
   supertypeName: "oBJECT",
   properties: {
-    "lengthSymbol": {range: "String", initialValue:"A"},
-    "jumpSuccessProbMat" : {range: Array, initialValue:
-          [[0.25, 0.25, 0.25, 0.25], [0.25, 0.25, 0.25, 0.25],
-            [0.25, 0.25, 0.25, 0.25]]},
     "position": {range:"NonNegativeInteger", minValue:0, maxValue:6, shortLabel: "pos"},
-
+    "receivedLengthSymbol": {range: "String", initialValue:"A"},
+    "learnMatrix" : {range: Array, initialValue:
+          [[0.25, 0.25, 0.25, 0.25], [0.25, 0.25, 0.25, 0.25],
+            [0.25, 0.25, 0.25, 0.25]]}
   },
   methods: {
     "jump": function ( jumpLength) {
