@@ -6,12 +6,12 @@ var Jumper = new cLASS({
     "jumpSuccessProbMat" : {range: Array, initialValue:
           [[0.25, 0.25, 0.25, 0.25], [0.25, 0.25, 0.25, 0.25],
             [0.25, 0.25, 0.25, 0.25]]},
-    "position": {range:"NonNegativeInteger", minValue:0, maxValue:6},
+    "position": {range:"NonNegativeInteger", minValue:0, maxValue:6, shortLabel: "pos"},
 
   },
   methods: {
     "jump": function ( jumpLength) {
-      this.position = jumpLength;  // 1,2,3, 4
+      this.position = jumpLength;  // 1,2,3,4,5
     },
 
     "reset": function(){
