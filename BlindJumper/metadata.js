@@ -20,12 +20,12 @@ sim.model.systemNarrative = '<p>In this model on multi-agent reinforcement learn
     'the right jump length. Both agents can perceive the success or failure of a jump (a jump fails if'+
     'it is too short or too long), and then update their signal interpretation function accordingly.</p>';
 
-sim.model.shortDescription = "<p>In this model on multi-agent reinforcement learning there is an agent (the \\\"jumper\\\") that is'+\n" +
-    "'not able to see\tthe size of the barrier over which he has to jump, and there is another agent'+\n" +
-    "'(the \\\"speaker\\\")\tthat is able to see the size of the barrier is and tries to communicate the right'+\n" +
-    "'jump length to the jumper.\tHowever, both agents first have to learn which signal communicates'+\n" +
-    "'the right jump length. Both agents can perceive the success or failure of a jump (a jump fails if'+\n" +
-    "'it is too short or too long), and then update their signal interpretation function accordingly.</p>";
+sim.model.shortDescription = '<p>In this model on multi-agent reinforcement learning there is an agent (the \"jumper\") that is'+
+    'not able to see\tthe size of the barrier over which he has to jump, and there is another agent'+
+    '(the \"speaker\")\tthat is able to see the size of the barrier is and tries to communicate the right'+
+    'jump length to the jumper.\tHowever, both agents first have to learn which signal communicates'+
+    'the right jump length. Both agents can perceive the success or failure of a jump (a jump fails if'+
+    'it is too short or too long), and then update their signal interpretation function accordingly.</p>';
 sim.model.license = "CC BY-NC";
 sim.model.creator = "Yassir Sellal";
 sim.model.created = "2019-07-15";

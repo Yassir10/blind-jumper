@@ -3,10 +3,12 @@ let BarrierChange = new cLASS({
   supertypeName: "eVENT",
   shortLabel: "barChng",
   properties: {
-    "barrier": { range: "Barrier" }
+    "barrier": { range: "Barrier" },
+    "jumper": {range: "Jumper"},
   },
   methods: {
     "onEvent": function () {
+      this.jumper.reset();
       this.barrier.change();
       return [];
     }

@@ -12,6 +12,7 @@ var Jumper = new cLASS({
   methods: {
     "jump": function ( jumpLength) {
       this.position = jumpLength;  // 1,2,3, 4
+      sim.stat.jumpsNumber++;
     },
 
     "reset": function(){

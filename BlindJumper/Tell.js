@@ -9,6 +9,8 @@ class LearningMatrix extends Array {
     }
     for (j = 0; j < P[row].length; j++) {
       P[row][j] = P[row][j] / rowSum;
+      P[row][j] = (Math.floor(P[row][j]*100))/100;
+
     }
   }
   maxColIndex( r) {
@@ -36,7 +38,7 @@ class LearningMatrix extends Array {
     P[row][col] = P[row][col] * (1 - alpha);
     for (j = 0; j < P[row].length; j++) {
       if (j !== col) {
-        P[row][j] = (1 + alpha) * P[row][j];
+        P[row][j] = (1 + alpha) * P[row][j]
       }
     }
     this.normalize(row);
@@ -51,6 +53,17 @@ class LearningMatrix extends Array {
       outputMess += "\n";
     }
     console.log(outputMess);
+  }
+
+  toString(){
+    let P = this[0], M = P.length, N = P[0].length, i, j, outputMess = [];
+    for (i = 0; i < M; i++) {
+      for (j = 0; j < N; j++) {
+        outputMess+= (P[i][j] + " ");
+      }
+      outputMess += "\n";
+    }
+    return outputMess;
   }
 
 }
