@@ -7,7 +7,7 @@
 /*******************************************************
  Simulation Parameters
 ********************************************************/
-sim.config.stepDuration = 20;
+sim.config.stepDuration = 500;
 sim.scenario.simulationEndTime = 200;
 sim.scenario.randomSeed = 5;  // optional
 sim.config.createLog = true;
@@ -28,7 +28,7 @@ sim.model.v.i = {
 
 };
 sim.model.objectTypes = ["Jumper", "Speaker","Barrier"];
-sim.model.eventTypes = ["Tell", "BarrierChange", "Jump"];
+sim.model.eventTypes = ["Tell", "StartOver", "Jump"];
 /*******************************************************
  Define the initial state
  ********************************************************/
@@ -36,19 +36,19 @@ sim.scenario.initialState.objects = {
 };
 
 sim.scenario.initialState.events = [
-  {typeName: "BarrierChange", occTime: 1, barrier: "3", jumper:"1"},
-  {typeName: "Tell", occTime: 2, speaker: "2", jumper: "1"},
-  {typeName: "Jump", occTime: 3, barrier: "3", jumper:"1", speaker:"2" }
+  {typeName: "StartOver", occTime: 1, barrier: 3, jumper: 1},
+  {typeName: "Tell", occTime: 2, speaker: 2, jumper: 1},
+  {typeName: "Jump", occTime: 3, barrier: 3, jumper: 1, speaker: 2 }
 ];
 sim.scenario.setupInitialState = function(){
-  var jumper = new Jumper({id: 1, name:"jumper", shortLabel:"jumper", position:0}),
+  let jumper = new Jumper({id: 1, name:"jumper", shortLabel:"jumper", position: 1}),
   speaker = new Speaker({id: 2, name:"speaker", barrier:"3"}),
-  barrier = new Barrier({id:3, name:"barrier", shortLabel:"bar", length:2});
+  barrier = new Barrier({id: 3, name:"barrier", shortLabel:"bar", length: 2});
   sim.addObject(jumper);
   sim.addObject(speaker);
   sim.addObject(barrier);
-  jumper.jumpSuccessProbMat = new LearningMatrix(jumper.jumpSuccessProbMat);
-  speaker.tellSuccessProbMat = new LearningMatrix(speaker.tellSuccessProbMat);
+  jumper.learnMatrix = new LearningMatrix( jumper.learnMatrix);
+  speaker.learnMatrix = new LearningMatrix( speaker.learnMatrix);
 };
 
 /*******************************************************
@@ -115,7 +115,7 @@ sim.config.observationUI.objectViews = {
       shapeName: "text",
       shapeAttributes:{
         textContent: function(j){
-          let jumpSuccessMatrix = j.jumpSuccessProbMat[0], output = "";
+          let jumpSuccessMatrix = j.learnMatrix[0], output = "";
           for(let i=0;i<jumpSuccessMatrix[0].length;i++){
             output += jumpSuccessMatrix[0][i]+" ";
           }
@@ -131,7 +131,7 @@ sim.config.observationUI.objectViews = {
       shapeName: "text",
       shapeAttributes: {
         textContent: function(j){
-          let jumpSuccessMatrix = j.jumpSuccessProbMat[0], output = "";
+          let jumpSuccessMatrix = j.learnMatrix[0], output = "";
           for(let i=0;i<jumpSuccessMatrix[0].length;i++){
             output += jumpSuccessMatrix[1][i]+" ";
           }
@@ -148,7 +148,7 @@ sim.config.observationUI.objectViews = {
       shapeName: "text",
       shapeAttributes:{
         textContent: function(j){
-          let jumpSuccessMatrix = j.jumpSuccessProbMat[0], output = "";
+          let jumpSuccessMatrix = j.learnMatrix[0], output = "";
           for(let i=0;i<jumpSuccessMatrix[0].length;i++){
             output += jumpSuccessMatrix[2][i]+" ";
           }
@@ -180,7 +180,7 @@ sim.config.observationUI.objectViews = {
       shapeName: "text",
       shapeAttributes: {
         textContent: function(s){
-          let tellSuccessMatrix = s.tellSuccessProbMat[0], output = "";
+          let tellSuccessMatrix = s.learnMatrix[0], output = "";
           for(let i=0;i<tellSuccessMatrix[0].length;i++){
             output += tellSuccessMatrix[0][i]+" ";
           }
@@ -197,7 +197,7 @@ sim.config.observationUI.objectViews = {
       shapeName: "text",
       shapeAttributes: {
             textContent: function(s){
-      let tellSuccessMatrix = s.tellSuccessProbMat[0], output = "";
+      let tellSuccessMatrix = s.learnMatrix[0], output = "";
       for(let i=0;i<tellSuccessMatrix[0].length;i++){
         output += tellSuccessMatrix[1][i]+" ";
       }
@@ -214,7 +214,7 @@ sim.config.observationUI.objectViews = {
     shapeName: "text",
     shapeAttributes:{
     textContent: function(s){
-      let tellSuccessMatrix = s.tellSuccessProbMat[0], output = "";
+      let tellSuccessMatrix = s.learnMatrix[0], output = "";
       for(let i=0;i<tellSuccessMatrix[0].length;i++){
         output += tellSuccessMatrix[2][i]+" ";
       }
