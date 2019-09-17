@@ -23,7 +23,7 @@ sim.model.v.alpha = {
 
 };
 sim.model.objectTypes = ["Jumper", "Speaker","Barrier"];
-sim.model.eventTypes = ["Tell", "StartOver", "Jump"];
+sim.model.eventTypes = ["StartOver", "Tell", "Jump"];
 /*******************************************************
  Define the initial state
  ********************************************************/

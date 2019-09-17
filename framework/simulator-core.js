@@ -8883,6 +8883,11 @@ oes.ui.setupVisualization = function () {
         oes.ui.resetCanvas = oes.ui.vis.SVG.reset;
         oes.ui.visualizeStep = oes.ui.vis.SVG.visualizeStep;
         break;
+      case "Zdog":
+        oes.ui.setupCanvas = oes.ui.vis.Zdog.setup;
+        oes.ui.resetCanvas = oes.ui.vis.Zdog.reset;
+        oes.ui.visualizeStep = oes.ui.vis.Zdog.visualizeStep;
+        break;
       default:
         console.log("Invalid visualization type: "+ sim.config.observationUI.visualType);
         sim.config.visualize = false;
