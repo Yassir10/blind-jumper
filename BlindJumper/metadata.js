@@ -21,6 +21,7 @@ sim.model.systemNarrative = '<p>In this model on <em>multi-agent reinforcement l
     'which jump length. Both agents can perceive the success or failure of a jump (a jump fails if '+
     'it is too short or too long), and then update their signal interpretation function accordingly.</p>';
 
+
 sim.model.shortDescription = "<p></p>";
 sim.model.license = "CC BY-NC";
 sim.model.creator = "Yassir Sellal";
