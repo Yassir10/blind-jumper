@@ -7,9 +7,9 @@
 /*******************************************************
  Simulation Parameters
 ********************************************************/
-sim.config.stepDuration = 500;
-sim.scenario.simulationEndTime = 200;
-sim.scenario.randomSeed = 5;  // optional
+sim.config.stepDuration = 200;
+sim.scenario.simulationEndTime = 600;
+//sim.scenario.randomSeed = 5;  // optional
 sim.config.createLog = true;
 sim.config.visualize = true;
 
@@ -82,19 +82,19 @@ sim.config.observationUI.fixedElements = {
       x:90,
       y:22,
       width:120,
-      height: 90
+      height: 70
     },
-    style: "fill:#efdd92; stroke-width:0"
+    style: "fill:#f2e8d5; stroke-width:0"
   },
   "MatrixSpeaker":{
     shapeName: "rect",
     shapeAttributes:{
       x:510,
       y:22,
-      width:120,
-      height:90
+      width:100,
+      height:75
     },
-    style: "fill:#efdd92; stroke-width:0"
+    style: "fill:#f2e8d5; stroke-width:0"
   }
 };
 sim.config.observationUI.objectViews = {
@@ -104,7 +104,7 @@ sim.config.observationUI.objectViews = {
         id: "jumperView",
         file: sim.config.imgFolder + "blind-man.png",
         x: function (j) {
-          return (70 + j.position * 50);
+          return (20 + j.position * 62);
         },
         y: 142,   // left-upper corner (x,y)
         width: 154,
@@ -173,7 +173,15 @@ sim.config.observationUI.objectViews = {
   "speaker": [
       { shapeName: "image",
       shapeAttributes: { 
-        file: sim.config.imgFolder + "cartoon-man-wearing-suit.png", 
+        file: function(s) {
+          let speakerimgString="";
+          if(s.colSpeaker===0) {
+            return sim.config.imgFolder + "cartoon-man-wearing-suit.png"
+          } else {
+            console.log("haha-"+sim.config.imgFolder + "cartoon-man-wearing-suit_"+s.colSpeaker+".png");
+            return sim.config.imgFolder + "cartoon-man-wearing-suit_"+s.colSpeaker+".png";
+          }
+          },
         x: 500, y:129, width: 107, height: 131
       }
       }, {
@@ -187,7 +195,7 @@ sim.config.observationUI.objectViews = {
       return output;
       },
         style:"font-size:12px; text-anchor:middle; text-color",
-        x:570,
+        x:560,
         y:42,
         width:150,
         height:138
@@ -204,7 +212,7 @@ sim.config.observationUI.objectViews = {
       return output;
       },
         style: "font-size:12px; text-anchor:middle; text-color",
-        x: 570,
+        x: 560,
         y: 62,
         width: 150,
         height: 138
@@ -221,7 +229,7 @@ sim.config.observationUI.objectViews = {
       return output;
       },
     style:"font-size:12px; text-anchor:middle; text-color",
-        x:570,
+        x:560,
         y:82,
         width:150,
         height:138

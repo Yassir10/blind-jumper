@@ -289,8 +289,8 @@
 	<!-- =================================================================== -->
 	<PhysicalAgentType name="Jumper">
 	<!-- =================================================================== -->
-		<documentation><aors:description xmlns="http://www.w3.org/1999/xhtml">Each RL rule defines a number of relevant situation types (based on the triggering 
-			perception event and one of a finite number of state conditions) and enumerates them with the help of a 
+		<documentation><aors:description xmlns="http://www.w3.org/1999/xhtml">Each RL rule defines a number of relevant situation types (based on
+			the triggering perception event and one of a finite number of state conditions) and enumerates them with the help of a
 			<em>state index</em>. This state index corresponds to the row of the learning automata (LA) matrix. 
 			The action event scheduled by the rule has a parameter for which the rule is using a finite number of values 
 			corresponding to the number of columns of the LA matrix. By using a lookup function searching for the maximum 
