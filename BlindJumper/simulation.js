@@ -8,7 +8,7 @@
  Simulation Parameters
 ********************************************************/
 sim.config.stepDuration = 200;
-sim.scenario.simulationEndTime = 600;
+sim.scenario.simulationEndTime = 200;
 //sim.scenario.randomSeed = 5;  // optional
 sim.config.createLog = true;
 sim.config.visualize = true;
@@ -27,6 +27,7 @@ sim.model.v.i = {
   initialValue: 0,
 
 };
+
 sim.model.objectTypes = ["Jumper", "Speaker","Barrier"];
 sim.model.eventTypes = ["StartOver", "Tell", "Jump"];
 /*******************************************************
