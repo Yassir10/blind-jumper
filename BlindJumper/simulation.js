@@ -42,7 +42,7 @@ sim.scenario.initialState.events = [
   {typeName: "Jump", occTime: 3, barrier: 3, jumper: 1, speaker: 2 }
 ];
 sim.scenario.setupInitialState = function(){
-  let jumper = new Jumper({id: 1, name:"jumper", shortLabel:"jumper", position: 1}),
+  var jumper = new Jumper({id: 1, name:"jumper", shortLabel:"jumper", position: 1}),
   speaker = new Speaker({id: 2, name:"speaker", barrier:"3"}),
   barrier = new Barrier({id: 3, name:"barrier", shortLabel:"bar", length: 2});
   sim.addObject(jumper);
@@ -104,139 +104,124 @@ sim.config.observationUI.objectViews = {
       shapeAttributes: {
         id: "jumperView",
         file: sim.config.imgFolder + "blind-man.png",
-        x: function (j) {
-          return (20 + j.position * 62);
-        },
-        y: 142,   // left-upper corner (x,y)
-        width: 154,
-        height: 138,
-        },
-      },
-    {
-      shapeName: "text",
-      shapeAttributes:{
-        textContent: function(j){
-          let jumpSuccessMatrix = j.learnMatrix[0], output = "";
-          for(let i=0;i<jumpSuccessMatrix[0].length;i++){
-            output += jumpSuccessMatrix[0][i]+" ";
-          }
-          return output;
-          },
-        style:"font-size:12px; text-anchor:middle; text-color",
-        x:150,
-        y:42,
-        width:150,
-        height:138
-      }},
-    {
-      shapeName: "text",
-      shapeAttributes: {
-        textContent: function(j){
-          let jumpSuccessMatrix = j.learnMatrix[0], output = "";
-          for(let i=0;i<jumpSuccessMatrix[0].length;i++){
-            output += jumpSuccessMatrix[1][i]+" ";
-          }
-          return output;
-          },
-        style: "font-size:12px; text-anchor:middle; text-color",
-        x: 150,
-        y: 62,
-        width: 150,
-        height: 138
+		// left-upper corner (x,y)
+        x: function (j) { return 20 + j.position * 62;},
+        y: 142, width: 154, height: 138,
       }
     },
-    {
-      shapeName: "text",
+    { shapeName: "text",
       shapeAttributes:{
-        textContent: function(j){
-          let jumpSuccessMatrix = j.learnMatrix[0], output = "";
-          for(let i=0;i<jumpSuccessMatrix[0].length;i++){
-            output += jumpSuccessMatrix[2][i]+" ";
+        textContent: function (j) {
+          var jumpSuccessMatrix = j.learnMatrix[0], 
+		      output = jumpSuccessMatrix[0][0], i=0;
+          for (i=1; i < jumpSuccessMatrix[0].length; i++){
+            output += " | " + jumpSuccessMatrix[0][i];
           }
           return output;
-          },
-        style:"font-size:12px; text-anchor:middle; text-color",
-        x:150,
-        y:82,
-        width:150,
-        height:138
+        },
+        x:150, y:42,
+        width:150, height:138,
+        style:"font-size:12px; text-anchor:middle;"
       }
-      }],
+	},
+    { shapeName: "text",
+      shapeAttributes: {
+        textContent: function(j){
+          var jumpSuccessMatrix = j.learnMatrix[0], 
+		      output = jumpSuccessMatrix[1][0], i=0;
+          for (i=1; i < jumpSuccessMatrix[1].length; i++){
+            output += " | " + jumpSuccessMatrix[1][i];
+          }
+          return output;
+        },
+        x: 150, y: 62,
+        width: 150, height: 138,
+        style:"font-size:12px; text-anchor:middle;"
+      }
+    },
+    { shapeName: "text",
+      shapeAttributes:{
+        textContent: function(j){
+          var jumpSuccessMatrix = j.learnMatrix[0], 
+		      output = jumpSuccessMatrix[2][0], i=0;
+          for (i=1; i < jumpSuccessMatrix[2].length; i++){
+            output += " | " + jumpSuccessMatrix[2][i];
+          }
+          return output;
+        },
+        x:150, y:82,
+        width:150, height:138,
+        style:"font-size:12px; text-anchor:middle;"
+      }
+    }],
   "barrier": [  
     { shapeName: "rect",  
       shapeAttributes: {  
-        x: 200, y: 200,  // left-upper corner (x,y) 
+        x: 200, y: 205,  // left-upper corner (x,y) 
         width: function (b) {return b.length * 50;},
-        height: 50
+        height: 50,
+        style:"fill:grey;"
       }
     }
   ],
   "speaker": [
-      { shapeName: "image",
+    { shapeName: "image",
       shapeAttributes: { 
-        file: function(s) {
-          let speakerimgString="";
-          if(s.colSpeaker===0) {
+        file: function (s) {
+          var speakerimgString="";
+          if (s.colSpeaker===0) {
             return sim.config.imgFolder + "cartoon-man-wearing-suit.png"
           } else {
             console.log("haha-"+sim.config.imgFolder + "cartoon-man-wearing-suit_"+s.colSpeaker+".png");
             return sim.config.imgFolder + "cartoon-man-wearing-suit_"+s.colSpeaker+".png";
           }
-          },
-        x: 500, y:129, width: 107, height: 131
+        },
+        x: 500, y:132, width: 107, height: 131
       }
-      }, {
-      shapeName: "text",
+    }, 
+	{ shapeName: "text",
       shapeAttributes: {
-        textContent: function(s){
-          let tellSuccessMatrix = s.learnMatrix[0], output = "";
-          for(let i=0;i<tellSuccessMatrix[0].length;i++){
-            output += tellSuccessMatrix[0][i]+" ";
+        textContent: function (s) {
+          var tellSuccessMatrix = s.learnMatrix[0], 
+		      output = tellSuccessMatrix[0][0], i=0;
+          for (i=1; i < tellSuccessMatrix[0].length; i++){
+            output += " | " + tellSuccessMatrix[0][i];
           }
-      return output;
-      },
-        style:"font-size:12px; text-anchor:middle; text-color",
-        x:560,
-        y:42,
-        width:150,
-        height:138
+          return output;
+        },
+        x:560, y:42, width:150, height:138,
+        style:"font-size:12px; text-anchor:middle;"
       }
-      },
-    {
-      shapeName: "text",
+    },
+    { shapeName: "text",
       shapeAttributes: {
-            textContent: function(s){
-      let tellSuccessMatrix = s.learnMatrix[0], output = "";
-      for(let i=0;i<tellSuccessMatrix[0].length;i++){
-        output += tellSuccessMatrix[1][i]+" ";
+        textContent: function (s) {
+          var tellSuccessMatrix = s.learnMatrix[0], 
+		      output = tellSuccessMatrix[1][0], i=0;
+          for (i=1; i < tellSuccessMatrix[1].length; i++){
+            output += " | " + tellSuccessMatrix[1][i];
+          }
+          return output;
+        },
+        x: 560, y: 62, width: 150, height: 138,
+        style:"font-size:12px; text-anchor:middle;"
       }
-      return output;
-      },
-        style: "font-size:12px; text-anchor:middle; text-color",
-        x: 560,
-        y: 62,
-        width: 150,
-        height: 138
+    },
+    { shapeName: "text",
+      shapeAttributes: {
+        textContent: function (s) {
+          var tellSuccessMatrix = s.learnMatrix[0], 
+		      output = tellSuccessMatrix[2][0], i=0;
+          for (i=1; i < tellSuccessMatrix[2].length; i++){
+            output += " | " + tellSuccessMatrix[2][i];
+          }
+          return output;
+        },
+        x:560, y:82, width:150, height:138,
+        style:"font-size:12px; text-anchor:middle;"
       }
-      },
-    {
-    shapeName: "text",
-    shapeAttributes:{
-    textContent: function(s){
-      let tellSuccessMatrix = s.learnMatrix[0], output = "";
-      for(let i=0;i<tellSuccessMatrix[0].length;i++){
-        output += tellSuccessMatrix[2][i]+" ";
-      }
-      return output;
-      },
-    style:"font-size:12px; text-anchor:middle; text-color",
-        x:560,
-        y:82,
-        width:150,
-        height:138
     }
-    }
-    ],
+  ],
 };
 
 sim.model.statistics = {
