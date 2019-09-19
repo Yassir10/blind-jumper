@@ -26,7 +26,7 @@ sim.model.shortDescription = "<p>The model defines three object types: <i>Jumper
     "event, the speaker, seeing the current length of the barrier tries to communicate this " +
     "information to the blind jumper using a symbol from his symbol set {A, B, C} based on his learning " +
     "matrix. Then, for taking a <i>Jump</i> decision, the jumper maps the received symbol to a possible jump " +
-    "length (1-3) using the learning matrix and then tries to jumps over the barrier. Subsequently, both the jumper " +
+    "length (1-4) using the learning matrix and then tries to jumps over the barrier. Subsequently, both the jumper " +
     "and the speaker update their learning matrices according to whether the jump was a success or a failure. " +
     "Finally, a <i>StartOver</i> occurs, resetting the jumper's position and modifying the length of the barrier.</p>" +
     "<p>The model keep learning until the two learning matrices converge to a certain value. This means that the two " +
