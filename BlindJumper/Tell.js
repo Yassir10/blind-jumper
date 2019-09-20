@@ -81,7 +81,6 @@ var Tell = new cLASS({
       this.speaker.rowSpeaker = this.speaker.barrier.length;
       this.speaker.colSpeaker = this.speaker.learnMatrix.maxColIndex( this.speaker.rowSpeaker);
       this.jumper.receivedLengthSymbol = "ABC".charAt( this.speaker.colSpeaker - 1);
-      console.lo
       return [];
     }
   }
