@@ -96,7 +96,78 @@ sim.config.observationUI.fixedElements = {
       height:75
     },
     style: "fill:#f2e8d5; stroke-width:0"
+  },
+    "rowAJumper":
+        { shapeName: "text",
+        shapeAttributes:{
+      textContent: "A",
+          x:79, y:42,
+          width:150, height:138,
+          style:"font-size:12px; text-anchor:middle;"
+    }
+    },
+  "rowBJumper":
+    { shapeName: "text",
+        shapeAttributes:{
+      textContent: "B",
+          x:79, y:62,
+          width:150, height:138,
+          style:"font-size:12px; text-anchor:middle;"
+    }
+    },
+  "rowCJumper":
+    { shapeName: "text",
+        shapeAttributes:{
+      textContent: "C",
+          x:79, y:82,
+          width:150, height:138,
+          style:"font-size:12px; text-anchor:middle;"
+    }
+    },
+  "colsSpeaker":
+    { shapeName: "text",
+        shapeAttributes:{
+      textContent: "1\xa0\xa0\xa0 | \xa0\xa0\xa0  2 \xa0\xa0|\xa0\xa0  3  \xa0\xa0\xa0|\xa0\xa0  4",
+          x:160, y:17,
+          width:150, height:138,
+          style:"font-size:12px; text-anchor:middle;"
+    }
+    },
+"colsJumper":
+    { shapeName: "text",
+    shapeAttributes:{
+  textContent: "A\xa0\xa0\xa0 | \xa0\xa0\xa0  B \xa0\xa0|\xa0\xa0  C ",
+      x:560, y:17,
+      width:150, height:138,
+      style:"font-size:12px; text-anchor:middle;"
+}
+},
+  "row1Speaker":
+     { shapeName: "text",
+       shapeAttributes:{
+       textContent: "1",
+       x:500, y:42,
+       width:150, height:138,
+       style:"font-size:12px; text-anchor:middle;"
+     }
+     },
+  "row2Speaker": { shapeName: "text",
+    shapeAttributes:{
+      textContent: "2",
+      x:500, y:62,
+      width:150, height:138,
+      style:"font-size:12px; text-anchor:middle;"
+    }
+  },
+  "row3Speaker":{ shapeName: "text",
+      shapeAttributes:{
+    textContent: "3",
+        x:500, y:82,
+        width:150, height:138,
+        style:"font-size:12px; text-anchor:middle;"
   }
+  },
+
 };
 sim.config.observationUI.objectViews = {
   "jumper": [
@@ -111,14 +182,6 @@ sim.config.observationUI.objectViews = {
     },
     { shapeName: "text",
       shapeAttributes:{
-        textContent: "1\xa0\xa0\xa0 | \xa0\xa0\xa0  2 \xa0\xa0|\xa0\xa0  3  \xa0\xa0\xa0|\xa0\xa0  4",
-        x:160, y:17,
-        width:150, height:138,
-        style:"font-size:12px; text-anchor:middle;"
-      }
-    },
-    { shapeName: "text",
-      shapeAttributes:{
         textContent: function (j) {
           let jumpSuccessMatrix = j.learnMatrix[0],
 		      output = jumpSuccessMatrix[0][0], i=0;
@@ -128,14 +191,6 @@ sim.config.observationUI.objectViews = {
           return output;
         },
         x:160, y:42,
-        width:150, height:138,
-        style:"font-size:12px; text-anchor:middle;"
-      }
-	},
-    { shapeName: "text",
-      shapeAttributes:{
-        textContent: "A",
-        x:79, y:42,
         width:150, height:138,
         style:"font-size:12px; text-anchor:middle;"
       }
@@ -157,14 +212,6 @@ sim.config.observationUI.objectViews = {
     },
     { shapeName: "text",
       shapeAttributes:{
-        textContent: "B",
-        x:79, y:62,
-        width:150, height:138,
-        style:"font-size:12px; text-anchor:middle;"
-      }
-    },
-    { shapeName: "text",
-      shapeAttributes:{
         textContent: function(j){
           let jumpSuccessMatrix = j.learnMatrix[0],
 		      output = jumpSuccessMatrix[2][0], i=0;
@@ -176,15 +223,7 @@ sim.config.observationUI.objectViews = {
         x:160, y:82,
         width:150, height:138,
         style:"font-size:12px; text-anchor:middle;"
-      }},
-    { shapeName: "text",
-      shapeAttributes:{
-        textContent: "C",
-        x:79, y:82,
-        width:150, height:138,
-        style:"font-size:12px; text-anchor:middle;"
-      }
-    }],
+      }}],
   "barrier": [  
     { shapeName: "rect",  
       shapeAttributes: {  
@@ -208,14 +247,6 @@ sim.config.observationUI.objectViews = {
         x: 500, y:132, width: 107, height: 131
       }
     },
-    { shapeName: "text",
-      shapeAttributes:{
-        textContent: "A\xa0\xa0\xa0 | \xa0\xa0\xa0  B \xa0\xa0|\xa0\xa0  C ",
-        x:560, y:17,
-        width:150, height:138,
-        style:"font-size:12px; text-anchor:middle;"
-      }
-    },
 	{ shapeName: "text",
       shapeAttributes: {
         textContent: function (s) {
@@ -227,14 +258,6 @@ sim.config.observationUI.objectViews = {
           return output;
         },
         x:560, y:42, width:150, height:138,
-        style:"font-size:12px; text-anchor:middle;"
-      }
-    },
-    { shapeName: "text",
-      shapeAttributes:{
-        textContent: "1",
-        x:500, y:42,
-        width:150, height:138,
         style:"font-size:12px; text-anchor:middle;"
       }
     },
@@ -253,14 +276,6 @@ sim.config.observationUI.objectViews = {
       }
     },
     { shapeName: "text",
-      shapeAttributes:{
-        textContent: "2",
-        x:500, y:62,
-        width:150, height:138,
-        style:"font-size:12px; text-anchor:middle;"
-      }
-    },
-    { shapeName: "text",
       shapeAttributes: {
         textContent: function (s) {
           var tellSuccessMatrix = s.learnMatrix[0], 
@@ -274,14 +289,6 @@ sim.config.observationUI.objectViews = {
         style:"font-size:12px; text-anchor:middle;"
       }
     },
-    { shapeName: "text",
-      shapeAttributes:{
-        textContent: "A",
-        x:500, y:82,
-        width:150, height:138,
-        style:"font-size:12px; text-anchor:middle;"
-      }
-    }
   ],
 };
 
