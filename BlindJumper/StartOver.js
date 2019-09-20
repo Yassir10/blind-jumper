@@ -5,11 +5,13 @@ let StartOver = new cLASS({
   properties: {
     "barrier": { range: "Barrier" },
     "jumper": {range: "Jumper"},
+    "speaker": {range: "Speaker"}
   },
   methods: {
     "onEvent": function () {
       this.barrier.length = rand.uniformInt( 1, 3);
       this.jumper.position = 1;  // reset the jumper position
+      this.speaker.colSpeaker = 0;
       return [];
     }
   }
