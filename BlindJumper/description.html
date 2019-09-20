@@ -17,7 +17,7 @@
   <h1>The Blind Jumper: Emerging Semantics through Reinforcement Learning</h1>
      <p>A simulation of a reinforcement learning process, in which two agents learn from each other.</p>
   <p><strong>Classification tags</strong>: DES, next-event time progression, Reinforcement Learning</p>
-  <figure class="right"><img src="C:\blind-jumper-2\BlindJumper\media\images\theme-image.svg" alt="" width="240" /></figure>
+  <figure class="right"><img src="media/images/theme-image.png" alt="" width="413" height="537" /></figure>
   <section id="shortDescription"></section>
  </div>
 
@@ -29,10 +29,9 @@
 
      <p>The potentially relevant object types are:</p>
      <ol>
-       <li>barriers,</li>
-       <li>Speakers,</li>
-       <li>jumpers,</li>
-       <li>...</li>
+       <li>jumper,</li>
+       <li>barrier,</li>
+       <li>speaker.</li>
      </ol>
      <!--
           <figure class="right-float">
@@ -40,53 +39,18 @@
             <figcaption>A conceptual model describing object types.</figcaption>
           </figure>
      -->
-     <p>Potentially relevant types of events are:</p>
+     <p>The relevant types of events are:</p>
      <ol>
-       <li>start over,</li>
-       <li>jump,</li>
        <li>tell,</li>
-       <li>...</li>
+       <li>jump,</li>
+       <li>start over.</li>
 	</ol>
-	<section>
-	<h1>Narrative(check the german version below)</h1>
-	<p>	In this model on <em>multi-agent reinforcement learning</em> there is an agent 
-    (the "jumper") that is not able to see the size of the barrier over which he has to jump, and there is 
-    another agent (the "speaker") that is able to see the size of the barrier and tries to communicate the right 
-    jump length to the jumper.	However, the jumper and the speaker do not speak the same language, so both agents 
-    first have to learn which signal communicates which jump length. Both agents can perceive the success or 
-    failure of a jump (a jump fails if it is too short or too long), and then update their signal interpretation
-    function accordingly.</p>	
-	</section>
-	<hr />
-    <section>
-      <p>In diesem Modell zum Multiagenten-Verstärkungslernen gibt es einen Agenten (den "Springer"),
-        der die Größe	einer Barriere, über die er springen muss, nicht sehen kann, und es gibt einen
-        anderen Agenten	(den "Sprecher"), der die Größe	der Barriere sehen kann und versucht, dem Springer
-        die richtige Sprunglänge zu kommunizieren. Beide Agenten müssen jedoch zuerst lernen, welche Signale
-        die richtige Sprunglänge kommunizieren. Beide Agenten können nach einem Sprung seinen Erfolg
-        oder sein Mißlingen erkennen (ein Sprung mißlingt, wenn er zu kurz oder zu lang ausfällt) und dann
-        ihre zu lernende Signal-Interpretationsfunktion entsprechend anpassen.</p>
-    </section>
 
 	<section>
 	<h1>Description</h1>
-	<p>The model defines three classes: jumper, speaker and barrier and also three 
-    events jump and tell and startOver, that also connect our classes. First the StartOver event occurs and 
-    modifies the length of the barrier, then the speaker notices the change and in order to communicate this 
-    information to the blind jumper, the speaker try to find the corresponding length symbol using his learning 
-    matrix which is displayed above the speaker. This happens through the tell event that occur right after 
-    StartOver. When the jumper receives a Tell message with one of the distance symbols A", "B" and "C" (corresponding to a 
-	state index of 1, 2 or 3), it stores this state index in the attribute <code>receivedLengthSymbol</code>. Then it looks 
-	up the maximum value in the corresponding row of the learning matrix and stores the column number of this value in the 
-	attribute <code>jumpLength</code> of the Jump event. Finally, it jumps with a distance corresponding to this index. 
-	In both cases (success and failure) the jumper and the speaker update their learning matrices according to whether it was
-	a successful jump or not. The model keep learning until the two learning matrices converge to a certain value. This means 
-	that the two agents could find a language that can communicate the barrier length to each other.</p>	
-	</section>
-    <section>
        <p> Each RL rule defines a number of relevant situation types (based on
        the triggering perception event and one of a finite number of state conditions) and enumerates them with the help of a
-       <em>state index</em>. This state index corresponds to the row of the learning automata (LA) matrix. The action event scheduled
+       <em>state index</em>. This state index corresponds to the row of the learning matrix. The action event scheduled
 	   by the rule has a parameter for which the rule is using a finite number of values corresponding to the number of columns of 
 	   the LA matrix. By using a lookup function searching for the maximum value in the matrix row determined by the current state 
 	   index, the RL rule associates an agent state with a specific action (given by the combination of the rule's action event type 
