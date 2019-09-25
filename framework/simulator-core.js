@@ -728,7 +728,7 @@ function cLASS (classSlots) {
           } else {
             throw "A value for "+ p +" is required when creating a(n) "+ classSlots.Name;
           }
-        }		  
+        }
       }
       // initialize historical properties
       if (pDef.historySize) {
@@ -774,7 +774,7 @@ function cLASS (classSlots) {
     constr.prototype.constructor = constr;
     // merge superclass property declarations with own property declarations
     constr.properties = Object.create( superclass.properties);
-   //  assign own property declarations, possibly overriding super-props                                     
+   //  assign own property declarations, possibly overriding super-props
     Object.keys( propDefs).forEach( function (p) {
       constr.properties[p] = propDefs[p];
     });
@@ -1578,9 +1578,9 @@ cLASS.RingBuffer.prototype.toString = function (n) {
  };
 
  /**
- * @fileOverview  A library of DOM element creation methods and 
+ * @fileOverview  A library of DOM element creation methods and
  * other DOM manipulation methods.
- * 
+ *
  * @author Gerd Wagner
  */
 
@@ -1617,7 +1617,7 @@ var dom = {
    },
    /**
     * Create an img element
-    * 
+    *
     * @param {string} id
     * @param {string} classValues
     * @param {object} content
@@ -1632,7 +1632,7 @@ var dom = {
     },
   /**
    * Create an option element
-   * 
+   *
    * @param {object} content
    * @return {object}
    */
@@ -1644,7 +1644,7 @@ var dom = {
   },
   /**
    * Create a button element
-   * 
+   *
    * @param {string} id
    * @param {string} classValues
    * @param {object} content
@@ -1665,7 +1665,7 @@ var dom = {
   },
   /**
    * Create a labeled output field
-   * 
+   *
    * @param {{labelText: string, name: string?, value: string?}}
    *        slots  The view definition slots.
    * @return {object}
@@ -2460,7 +2460,7 @@ oBJECTvIEW.prototype.render = function (objViewParentEl) {
   createUiElemsForVmFields();
   // create DOM elements (like buttons) for all user actions of the UI/view model
   createUiElemsForUserActions( uiContainerEl);
-  return dataBinding;  // a map of field names to corresponding DOM elements 
+  return dataBinding;  // a map of field names to corresponding DOM elements
 };
 /**
  * Set up a tabular UI for defining/editing entity records of a given
@@ -3850,9 +3850,9 @@ sTORAGEmANAGER.adapters["IndexedDB"] = {
   }
 };
  /**
- * @fileOverview  A library of DOM element creation methods and 
+ * @fileOverview  A library of DOM element creation methods and
  * other DOM manipulation methods.
- * 
+ *
  * @author Gerd Wagner
  */
  /**
@@ -3999,7 +3999,7 @@ var svg = {
   XLINK_NS: "http://www.w3.org/1999/xlink",
   /**
   * Create an SVG element
-  * 
+  *
   * @param {object} params  a lsit of optional parameters
   * @return {node} svgElement
   */
@@ -4026,12 +4026,12 @@ var svg = {
   },
   /**
   * Create a rect element
-  * 
-  * @param {number} x 
-  * @param {number} y 
-  * @param {number} width 
-  * @param {number} height 
-  * @param {object} optParams 
+  *
+  * @param {number} x
+  * @param {number} y
+  * @param {number} width
+  * @param {number} height
+  * @param {object} optParams
   *
   * @return (object)
   */
@@ -4046,12 +4046,12 @@ var svg = {
   },
   /**
   * Create a circle element
-  * 
-  * @param {number} x 
-  * @param {number} y 
-  * @param {number} width 
-  * @param {number} height 
-  * @param {string} color 
+  *
+  * @param {number} x
+  * @param {number} y
+  * @param {number} width
+  * @param {number} height
+  * @param {string} color
   *
   * @return (object)
   */
@@ -4064,14 +4064,14 @@ var svg = {
     return el;
   },
   /**
-   * Create a line element 
-   * 
-   * @param {number} x1 
-   * @param {number} y1 
-   * @param {number} x2 
-   * @param {number} y2 
+   * Create a line element
+   *
+   * @param {number} x1
+   * @param {number} y1
+   * @param {number} x2
+   * @param {number} y2
    * @param {string} color  the stroke color
-   * @param {number} width 
+   * @param {number} width
    * @return {object}
    */
   createLine: function (x1, y1, x2, y2, optParams) {
@@ -4085,7 +4085,7 @@ var svg = {
   },
   /**
    * Create a path element
-   * 
+   *
    * @param {number} d  the path description
    * @param {string} color  the stroke color
    * @param {number} width  the stroke width
@@ -4099,7 +4099,7 @@ var svg = {
   },
   /**
   * Create a group element
-  * 
+  *
   * @return gNode
   */
   createGroup: function (optParams) {
@@ -4114,7 +4114,7 @@ var svg = {
   * @param {string} name the content of the node
   * @param {number} fontSize of the content
   * @param {string} color of the content
-  * 
+  *
   * @return text object
   */
   createText: function ( x, y, txt, style) {
@@ -6082,7 +6082,7 @@ sim.logStep = function (stepLog) {
 };
 /*******************************************************************************
  * EventList maintains an ordered list of events using Binary Heap
- * 
+ *
  * @copyright Copyright 2018 Brandenburg University of Technology, Germany.
  * @license The MIT License (MIT)
  * @author Luis Gustavo Nardin
@@ -6538,7 +6538,7 @@ Improvements/extensions
 v1
  -  (1) merge AT.fixedDuration and AT.randomDuration() into AT.duration()
     (2) rename the property "resources" to "resourceRoles"
-    (3) rename the property "actor" to "performer" 
+    (3) rename the property "actor" to "performer"
     (4) refactor oes.ProcNodeStatusEL to oes.ResourceStatusEL and "idle" to "available"
     (5) introduce processOwner (?) and resourcePools
  - support the definition of a "warm-up period"
@@ -8982,7 +8982,7 @@ oes.ui.vis.SVG.setup = function (containerEl) {
   if (objViews) {  // render initial object views
     Object.keys( objViews).forEach( function (viewId) {
       var el=null, shapeGroupEl=null, fp=null,
-          obj = sim.namedObjects[viewId],  // when viewId = objName 
+          obj = sim.namedObjects[viewId],  // when viewId = objName
           objView = objViews[viewId],   // objViews[obj.constructor.Name]
           objViewItems = Array.isArray( objView) ? objView : [objView];
       shapeGroupEl = svg.createGroup();
@@ -9099,7 +9099,420 @@ oes.ui.vis.SVG.createShapeFromDefRec = function (shDefRec) {
   }
   return svg.createShapeFromDefRec( shDefRec);
 };
+/*====================================================================================
+    Z D O G
+ ==================================================================================== */
+oes.ui.vis.ZDog.createShapeFromFixedElem = function (shDefRec) {
+ shAttribs = shDefRec.shapeAttributes;
+ var el = null;
+ var x = 0, y = 0, width = 0, height = 0,x1=0,x2=0,y1=0,y2=0;
+ //shape attributes
+ Object.keys(shAttribs).forEach(
+   function(attrName){
+     var val;
+     if (typeof shAttribs[attrName] === "function") {
+       val = shAttribs[attrName](obj);
+     } else val = shAttribs[attrName];
+     switch (attrName){
+       case "x":
+         x = val;
+         break;
+       case "x1":
+         x1 = val;
+         break;
+       case "x2":
+         x2 = val;
+         break;
+       case "y":
+         y = val;
+         break;
+       case "y1":
+         y1 = val;
+         break;
+       case "y2":
+         y2 = val;
+         break;
+       case "width":
+         width = val;
+         break;
+       case "height":
+         height = val;
+         break;
+       default:
+         break;
+     }
+   }
+ );
+ if(x1){
+   width = x2 - x1;
+   x = x1;
+ }
+ if(y1){
+   height = y2 - y2;
+   y = y1;
+ }
+ //  style
+ var colorVal = "darkblue", strokeWidthVal = 5;
+ if(shDefRec.style){
+   styleArray = shDefRec.style.split(";");
+   Object.keys(styleArray).forEach(
+     function(styleId){
+       style = styleArray[styleId].split(":");
+       styleProperty = style[0];
+       styleVal = style[1];
+       switch (styleProperty){
+         case "color":
+           colorVal = styleVal;
+           break;
+         case "fill":
+           colorVal = styleVal;
+           break;
+         case "stroke":
+           colorVal = styleVal;
+           break;
+         case "stroke-width":
+           strokeWidthVal = parseInt(styleVal);
+           break;
+       }
+     }
+   );
+ }
+ var anchor = new Zdog.Box(
+   {
+     //addTo: illo,
+     width: width,
+     depth: 50,
+     height: height,
+     color: colorVal,
+     translate: {x:x + 20, y:y, z:-20},
+     stroke: strokeWidthVal,
+   }
+ )
+ el = anchor;
+ return el;
+}
+//Create shape using attributes of the shape
+oes.ui.vis.ZDog.createShapeFromDefRec = function (shDefRec, obj) {
 
+ //return an array of queue objects
+ shAttribs = shDefRec.shapeAttributes;
+ var el = [];
+ var x = 0, y = 0, width = 0, height = 0, x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+ //shape attributes
+ Object.keys(shAttribs).forEach(
+   function(attrName){
+     var val;
+     if (typeof shAttribs[attrName] === "function") {
+       val = shAttribs[attrName](obj);
+     } else val = shAttribs[attrName];
+     switch (attrName){
+       case "x":
+         x = val;
+         break;
+       case "x1":
+         x1 = val;
+         break;
+       case "x2":
+         x2 = val;
+         break;
+       case "y":
+         y = val;
+         break;
+       case "y1":
+         y1 = val;
+         break;
+       case "y2":
+         y2 = val;
+         break;
+       case "width":
+         width = val;
+         break;
+       case "height":
+         height = val;
+         break;
+       default:
+         break;
+     }
+   }
+ );
+ if(x1){
+   width = x2 - x1;
+   x = x1;
+ }
+ if(y1){
+   height = y2 - y2;
+   y = y1;
+ }
+ //  style
+ var colorVal = "darkblue", strokeWidthVal = 5;
+ if(shDefRec.style){
+   styleArray = shDefRec.style.split(";");
+   Object.keys(styleArray).forEach(
+     function(styleId){
+       style = styleArray[styleId].split(":");
+       styleProperty = style[0];
+       styleVal = style[1];
+       switch (styleProperty){
+         case "color":
+           colorVal = styleVal;
+           break;
+         case "fill":
+           colorVal = styleVal;
+           break;
+         case "stroke":
+           colorVal = styleVal;
+           break;
+         case "stroke-width":
+           strokeWidthVal = parseInt(styleVal);
+           break;
+       }
+     }
+   );
+ }
+
+ var count = obj.queueLength;
+ for(var i=0;i<count;i++){
+   var anchor = new Zdog.Anchor(      {
+       //addTo:illo,
+       translate: {x: x - (i*30),y:y + 25,},
+     }
+   );
+   var cylinder = new Zdog.Cylinder(
+     {
+       addTo: anchor,
+       diameter: 10,
+       length: height,
+       rotate: {x:  Zdog.TAU /4},
+       stroke: strokeWidthVal,
+       color: colorVal,
+       fill: true,
+     }
+   );
+
+   var sphere = new Zdog.Hemisphere(
+     {
+       addTo: anchor,
+       diameter: 10,
+       stroke: strokeWidthVal,
+       color: colorVal,
+       rotate: {x: Zdog.TAU /4},
+       translate: {y:-height/2},
+     }
+   );
+   el.push(anchor);
+ }
+ return el;
+};
+///////////////////////////////////////
+oes.ui.vis.ZDog.setup = function () {
+ var obsUI = sim.config.observationUI,
+     fixedElems = obsUI.fixedElements,
+     objViews = obsUI.objectViews;
+ oes.ui.vis.ZDog.illo = new Zdog.Illustration(
+   {
+     element: '.zdog-svg',
+     dragRotate: true,
+   }
+ );
+ oes.ui.vis.ZDog.group = new Zdog.Anchor(
+   {
+     addTo: oes.ui.vis.ZDog.illo,
+   }
+ );
+ //render fixed elements
+ if(fixedElems){
+   Object.keys(fixedElems).forEach(
+     function(id){
+       var el = null;
+       el = oes.ui.vis.ZDog.createShapeFromFixedElem(fixedElems[id]);
+       // add fixed element to the main illustration
+       oes.ui.vis.ZDog.illo.addChild(el);
+     }//function
+   );//forEach fixedElems
+ }//if fixedElems
+ // render object views
+ if(objViews){
+   Object.keys(objViews).forEach(
+     function(viewId){
+       var el=null,
+        obj = sim.namedObjects[viewId],  // when viewId = objName
+        objView = objViews[viewId],   // objViews[obj.constructor.Name]
+        objViewItems = Array.isArray( objView) ? objView : [objView];  // eine Liste bilden
+       objViewItems.forEach(
+         function(itemDefRec){
+           if(itemDefRec.shapeName && itemDefRec.shapeName != "text"){
+             el = oes.ui.vis.ZDog.createShapeFromDefRec(itemDefRec,obj);
+             itemDefRec.element = el;
+             Object.keys(el).forEach(
+               function(elementId){
+                 oes.ui.vis.ZDog.group.addChild(el[elementId]);
+               }//function
+             );//forEach el array
+           }// if itemDefRec.shapeName
+           else if (itemDefRec.shapeName && itemDefRec.shapeName === "text"){
+             //el = document.createElementNS("http://www.w3.org/2000/svg" ,"text");
+             //el = document.createTextNode("text");
+             shAttribs = itemDefRec.shapeAttributes;
+             Object.keys(shAttribs).forEach(
+               function(attrName){
+                 var val;
+                 if (typeof shAttribs[attrName] === "function") {
+                   val = shAttribs[attrName](obj);
+                 } else val = shAttribs[attrName];
+                 el[attrName] = val;
+               }
+             )
+             zdogSVGElem = document.getElementsByTagName("svg")[0].appendChild(el);
+             itemDefRec.element = el;
+           }//else if itemDefRec.text
+         }//function
+       );//forEach objViewItems
+     }//function
+   );//forEach objViews
+ }//if objViews
+ oes.ui.vis.ZDog.illo.updateRenderGraph();
+};
+/////////////////
+oes.ui.vis.ZDog.visualizeStep = function () {
+  // get the array as el -> if it needs to be bigger add elements else remove elements from the array
+  var obsUI = sim.config.observationUI,
+     objViews = obsUI.objectViews;
+  Object.keys( objViews).forEach( function (viewId) {
+    var itemDefRec={}, shAttribs=[], el=null, i=0, val,
+    obj = sim.namedObjects[viewId],
+    objView = objViews[viewId],
+    objViewItems = Array.isArray( objView) ? objView : [objView];
+    // objViewItems is a list of view item definition records
+    for (i=0; i < objViewItems.length; i++) {
+      itemDefRec = objViewItems[i];
+      el = itemDefRec.element;
+      if(itemDefRec.shapeName && itemDefRec.shapeName != "text"){
+        shAttribs = itemDefRec.shapeAttributes;
+        if(Array.isArray(el)){
+          var x = 0, y = 0, width = 0, height = 0;
+          //shape attributes
+          Object.keys(shAttribs).forEach(
+            function(attrName){
+              var val;
+              if (typeof shAttribs[attrName] === "function") {
+                val = shAttribs[attrName](obj);
+              } else val = shAttribs[attrName];
+              switch (attrName){
+                case "x":
+                  x = val;
+                  break;
+                case "y":
+                  y = val;
+                  break;
+                case "width":
+                  width = val;
+                  break;
+                case "height":
+                  height = val;
+                  break;
+                default:
+                  break;
+              }//switch
+            }//function in forEach
+          );//forEach
+          //  style
+          var colorVal = "darkblue", strokeWidthVal = 5;
+          if(itemDefRec.style){
+            styleArray = itemDefRec.style.split(";");
+            Object.keys(styleArray).forEach(
+              function(styleId){
+                style = styleArray[styleId].split(":");
+                styleProperty = style[0];
+                styleVal = style[1];
+                switch (styleProperty){
+                  case "color":
+                    colorVal = styleVal;
+                    break;
+                  case "fill":
+                    colorVal = styleVal;
+                    break;
+                  case "stroke":
+                    colorVal = styleVal;
+                    break;
+                  case "stroke-width":
+                    strokeWidthVal = parseInt(styleVal);
+                    break;
+                }
+              }
+            );
+          }
+          var count = 0;
+          // if the step has a longer queue add more objects to the group
+          if(obj.queueLength > el.length){
+            count =  obj.queueLength - el.length;
+            x = x - (el.length * 30);
+            //x = x - ( el.length*30);
+            for(var i = 0;i<count;i++){
+              var anchor = new Zdog.Anchor(      {
+                  //addTo:illo,
+                  translate: {x: x - (i*30)  ,y:y + 25,},
+                }
+              );
+              var cylinder = new Zdog.Cylinder(
+                {
+                  addTo: anchor,
+                  diameter: 10,
+                  length: height,
+                  rotate: {x:  Zdog.TAU /4},
+                  stroke: strokeWidthVal,
+                  color: colorVal,
+                  fill: true,
+                }
+              );
+              var sphere = new Zdog.Hemisphere(
+                {
+                  addTo: anchor,
+                  diameter: 10,
+                  stroke: strokeWidthVal,
+                  color: colorVal,
+                  rotate: {x: Zdog.TAU /4},
+                  translate: {y:-height/2},
+                }
+              );
+              el.push(anchor);
+              oes.ui.vis.ZDog.group.addChild(anchor);
+              itemDefRec.element = el;
+              oes.ui.vis.ZDog.illo.updateRenderGraph();
+            }//for
+          }// if width/20 < el.length
+          // if the step has a shorter queue remove objects from the group
+          else if(width/20 < el.length){
+            count = obj.queueLength;
+            for(var j = el.length - 1;j>=count;j--){
+              el[j].remove();
+              el.pop();
+              itemDefRec.element = el;
+            }//for
+          }// if width/20 > el.length
+        }// if Array.isArray
+      }//if itemDefRec.shapeName
+      else if(itemDefRec.shapeName && itemDefRec.shapeName === "text"){
+        if (typeof itemDefRec.text === "function") {
+          txt = itemDefRec.shapeAttributes.textContent( obj);
+        }
+        else {
+          txt = itemDefRec.shapeAttributes.textContent;
+        }
+        shAttribs = itemDefRec.shapeAttributes;
+        Object.keys(shAttribs).forEach(
+          function(attrName){
+            var val;
+            if (typeof shAttribs[attrName] === "function") {
+              val = shAttribs[attrName](obj);
+            } else val = shAttribs[attrName];
+            el[attrName] = val;
+          }
+        )
+      }//else if itemDefRec.text
+    }// for objViewItems.length
+  });//forEach objectViews
+  oes.ui.vis.ZDog.illo.updateRenderGraph();
+};
 /***********************************************************************
  Set up the User Interaction (UIA) Elements
  A UIA type is defined in the scenario/config. A UIA is triggered by a
@@ -9168,7 +9581,7 @@ oes.ui.setupEventAppearances = function () {
       sim.visualEl.appendChild( domElem);
 	  /*
     } else if (evtView.shapeName === "text") {
-      domElem = svg.createText( );  
+      domElem = svg.createText( );
       canvasSvgEl.appendChild( el);
 	  */
     } else {
