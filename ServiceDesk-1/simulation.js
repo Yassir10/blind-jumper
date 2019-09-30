@@ -70,10 +70,11 @@ sim.model.statistics = {
  Define an observation UI
  ********************************************************/
 
-sim.config.observationUI.type = "SVG";
+//sim.config.observationUI.type = "SVG";
+sim.config.observationUI.type = "Zdog";
 sim.config.observationUI.canvas.width = 600;
 sim.config.observationUI.canvas.height = 300;
-sim.config.observationUI.fixedElements = {
+/*sim.config.observationUI.fixedElements = {
   "desk": {
     shapeName: "rect",
     shapeAttributes: { x: 350, y: 200, width: 50, height: 30},
@@ -89,6 +90,32 @@ sim.config.observationUI.objectViews = {
         y: 150, height: 80
       },
       style:"fill:yellow; stroke-width:0"
+    },
+    { shapeName: "text",
+      shapeAttributes: {x: 325, y: 250,
+          textContent: function (sd) {return sd.queueLength;}},
+      style:"font-size:14px; text-anchor:middle"
+    }
+  ]
+};*/
+sim.config.observationUI.fixedElements = {
+  "desk": {
+    shapeName: "box",
+    shapeAttributes: { x: 150, y: 100, z: -20, width: 50, height: 30, depth: 100,
+      color: "brown", stroke: 1, fill: true
+    }
+  }
+};
+sim.config.observationUI.objectViews = {
+  "serviceDesk1": [  // a view of the queue
+    { shapeName: "person",  // a rectangle defined by
+      shapeAttributes: {  // left-upper corner (x,y)
+        x: 100,//function (sd) {console.log(sd.queueLength); return Math.max( 0, 330 - sd.queueLength * 20);},
+        y: 50, z: 0, diameter: 10, height: 80,
+        number: function (sd) {return sd.queueLength;},
+        color: "darkblue", stroke: 1, fill: true
+      },
+
     },
     { shapeName: "text",
       shapeAttributes: {x: 325, y: 250,
