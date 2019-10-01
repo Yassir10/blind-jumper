@@ -297,6 +297,7 @@ var zdogVis = {
       {
         element: '.canvasZdog',
         dragRotate: true,
+        rotate: {x: -Math.PI / 6,y: -Math.PI / 6},
       }
     );
     zdogVis.fixedAnchor = new Zdog.Anchor(
