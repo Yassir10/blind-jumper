@@ -69,7 +69,6 @@
  <!-- Load polyfills for supporting >=IE9 -->
  <script crossorigin="anonymous"
          src="https://polyfill.io/v3/polyfill.min.js?features=Array.from%2CArray.of%2CArray.prototype.find%2CArray.prototype.includes%2CDOMTokenList%2CElement.prototype.after%2CElement.prototype.before%2CElement.prototype.classList%2CElement.prototype.cloneNode%2CIntl%2CNumber.isInteger%2CObject.keys%2CObject.values%2CPromise%2CString.prototype.endsWith%2CString.prototype.includes%2CURL%2Cconsole.log%2Cfetch"></script>
- <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
 </head>
 <body>
 <div id="frontMatter">
@@ -87,9 +86,12 @@
 <noscript>
  <p>Please turn on JavaScript in your browser. Otherwise you cannot run Sim4edu simulations.</p>
 </noscript>
+<script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/zfont/dist/zfont.min.js"></script>
 <script src="metadata.js"></script>
 <script src="../framework/frontMatter.js"></script>
 <!-- load common core JS code files -->
+<script src="../framework/zdog-visualization.js" async="async"></script>
 <script src="../framework/simulator-core.js" async="async"></script>
 <script src="../framework/chartist.js" async="async"></script>
 <!-- load scenario.js and all files required by it, and set up the user interface -->

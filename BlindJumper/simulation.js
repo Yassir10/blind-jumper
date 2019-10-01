@@ -63,16 +63,224 @@ sim.model.statistics = {
  ********************************************************/
 sim.config.imgFolder = "media/images/";
 sim.config.audioFolder = "media/sounds/";
-sim.config.observationUI.type = "SVG";
+sim.config.observationUI.type = "Zdog";
 sim.config.observationUI.canvas.width = 700;
 sim.config.observationUI.canvas.height = 300;
 sim.config.observationUI.canvas.style = "background-color:yellow";
 
 sim.config.observationUI.fixedElements = {
-  "ground": { 
-      shapeName: "line",  
-      shapeAttributes: {  
-        x1: 10, y1: 260, 
+  "ground": {
+      shapeName: "box",
+      shapeAttributes: {
+        x: 10, y: 260,
+        width: 600, height: 1,
+        color: "grey", strokeWidth: 10,
+      },
+
+  },
+  "MatrixJumper":{
+    shapeName: "box",
+    shapeAttributes:{
+      x:-200,
+      y:-50,
+      width:140,
+      height: 75,
+      fill: true,
+      color: "#f2e8d5", strokeWidth: 0,
+    },
+
+  },
+  "MatrixSpeaker":{
+    shapeName: "box",
+    shapeAttributes:{
+      x:100,
+      y:-50,
+      width:140,
+      height:75,
+      fill: true,
+      color: "#f2e8d5", strokeWidth: 0,
+    },
+  },
+    "rowAJumper":
+        { shapeName: "text",
+        shapeAttributes:{
+          textContent: "A",
+          x:-290, y:-80,
+          fontSize:12, textBaseline:"middle",
+        }
+      },
+  "rowBJumper":
+    { shapeName: "text",
+        shapeAttributes:{
+      textContent: "B",
+          x:-290, y:-60,
+          fontSize:12, textBaseline:"middle",
+    }
+    },
+  "rowCJumper":
+    { shapeName: "text",
+        shapeAttributes:{
+      textContent: "C",
+          x:-290, y:-40,
+          fontSize:12, textBaseline:"middle",
+    }
+    },
+  "colsSpeaker":
+    { shapeName: "text",
+        shapeAttributes:{
+      textContent: "1\xa0\xa0\xa0 | \xa0\xa0\xa0  2 \xa0\xa0|\xa0\xa0  3  \xa0\xa0\xa0|\xa0\xa0  4",
+          x:-270, y:-100,
+          fontSize:12, textBaseline:"middle",
+    }
+    },
+"colsJumper":
+    { shapeName: "text",
+    shapeAttributes:{
+  textContent: "A\xa0\xa0\xa0 | \xa0\xa0\xa0  B \xa0\xa0|\xa0\xa0  C ",
+      x:30, y:-100,
+      fontSize:12, textBaseline:"middle",
+}
+},
+  "row1Speaker":
+     { shapeName: "text",
+       shapeAttributes:{
+       textContent: "1",
+       x:10, y:-80,
+       fontSize:12, textBaseline:"middle",
+     }
+     },
+  "row2Speaker": { shapeName: "text",
+    shapeAttributes:{
+      textContent: "2",
+      x:10, y:-60,
+      fontSize:12, textBaseline:"middle",
+    }
+  },
+  "row3Speaker":{ shapeName: "text",
+      shapeAttributes:{
+    textContent: "3",
+        x:10, y:-40,
+        fontSize:12, textBaseline:"middle",
+  }
+  },
+
+};
+sim.config.observationUI.objectViews = {
+  "jumper": [
+      { shapeName: "cylinder",
+      shapeAttributes: {
+        // left-upper corner (x,y)
+        x: function (j) { return - 270 + j.position * 62;},
+        y:50, xRotation: Math.PI / 2,
+        length: 100, diameter: 30,
+      }
+    },
+    { shapeName: "text",
+      shapeAttributes:{
+        textContent: function (j) {
+          let jumpSuccessMatrix = j.learnMatrix[0],
+		      output = jumpSuccessMatrix[0][0], i=0;
+          for (i=1; i < jumpSuccessMatrix[0].length; i++){
+            output += " | " + jumpSuccessMatrix[0][i];
+          }
+          return output;
+        },
+        x:-270, y:-80,
+        fontSize:12, textBaseline:"middle",
+      }
+	},
+    { shapeName: "text",
+      shapeAttributes: {
+        textContent: function(j){
+          let jumpSuccessMatrix = j.learnMatrix[0],
+		      output = jumpSuccessMatrix[1][0], i=0;
+          for (i=1; i < jumpSuccessMatrix[1].length; i++){
+            output += " | " + jumpSuccessMatrix[1][i];
+          }
+          return output;
+        },
+        x: -270, y: -60,
+        fontSize:12, textBaseline:"middle",
+      }
+    },
+    { shapeName: "text",
+      shapeAttributes:{
+        textContent: function(j){
+          let jumpSuccessMatrix = j.learnMatrix[0],
+		      output = jumpSuccessMatrix[2][0], i=0;
+          for (i=1; i < jumpSuccessMatrix[2].length; i++){
+            output += " | " + jumpSuccessMatrix[2][i];
+          }
+          return output;
+        },
+        x:-270, y:-40,
+        fontSize:12, textBaseline:"middle",
+      }}],
+  "barrier": [
+    { shapeName: "box",
+      shapeAttributes: {
+        x: -90, y: 80,  // left-upper corner (x,y)
+        width: function (b) {return b.length * 50;},
+        height: 50,
+        depth: 100,
+        fill:true,
+        color: "grey",
+      }
+    }
+  ],
+  "speaker": [
+    { shapeName: "cone",
+      shapeAttributes: {
+        x: 100, y:100, length: 100, diameter: 30,
+        xRotation: Math.PI / 2,
+      }
+    },
+	{ shapeName: "text",
+      shapeAttributes: {
+        textContent: function (s) {
+          var tellSuccessMatrix = s.learnMatrix[0],
+		      output = tellSuccessMatrix[0][0], i=0;
+          for (i=1; i < tellSuccessMatrix[0].length; i++){
+            output += " | " + tellSuccessMatrix[0][i];
+          }
+          return output;
+        },
+        x:40, y:-80, fontSize:12, textBaseline:"middle",
+      }
+    },
+    { shapeName: "text",
+      shapeAttributes: {
+        textContent: function (s) {
+          var tellSuccessMatrix = s.learnMatrix[0],
+		      output = tellSuccessMatrix[1][0], i=0;
+          for (i=1; i < tellSuccessMatrix[1].length; i++){
+            output += " | " + tellSuccessMatrix[1][i];
+          }
+          return output;
+        },
+        x: 40, y: -60, fontSize:12, textBaseline:"middle",
+      }
+    },
+    { shapeName: "text",
+      shapeAttributes: {
+        textContent: function (s) {
+          var tellSuccessMatrix = s.learnMatrix[0],
+		      output = tellSuccessMatrix[2][0], i=0;
+          for (i=1; i < tellSuccessMatrix[2].length; i++){
+            output += " | " + tellSuccessMatrix[2][i];
+          }
+          return output;
+        },
+        x:40, y:-40,fontSize:12, textBaseline:"middle",
+      }
+    },
+  ],
+};
+/*sim.config.observationUI.fixedElements = {
+  "ground": {
+      shapeName: "line",
+      shapeAttributes: {
+        x1: 10, y1: 260,
         x2: 610, y2: 260
       },
       style:"stroke:grey; stroke-width:10"
@@ -224,10 +432,10 @@ sim.config.observationUI.objectViews = {
         width:150, height:138,
         style:"font-size:12px; text-anchor:middle;"
       }}],
-  "barrier": [  
-    { shapeName: "rect",  
-      shapeAttributes: {  
-        x: 200, y: 205,  // left-upper corner (x,y) 
+  "barrier": [
+    { shapeName: "rect",
+      shapeAttributes: {
+        x: 200, y: 205,  // left-upper corner (x,y)
         width: function (b) {return b.length * 50;},
         height: 50,
         style:"fill:grey;"
@@ -236,7 +444,7 @@ sim.config.observationUI.objectViews = {
   ],
   "speaker": [
     { shapeName: "image",
-      shapeAttributes: { 
+      shapeAttributes: {
         file: function (s) {
           if (s.colSpeaker===0) {
             return sim.config.imgFolder + "cartoon-man-wearing-suit.png"
@@ -250,7 +458,7 @@ sim.config.observationUI.objectViews = {
 	{ shapeName: "text",
       shapeAttributes: {
         textContent: function (s) {
-          var tellSuccessMatrix = s.learnMatrix[0], 
+          var tellSuccessMatrix = s.learnMatrix[0],
 		      output = tellSuccessMatrix[0][0], i=0;
           for (i=1; i < tellSuccessMatrix[0].length; i++){
             output += " | " + tellSuccessMatrix[0][i];
@@ -264,7 +472,7 @@ sim.config.observationUI.objectViews = {
     { shapeName: "text",
       shapeAttributes: {
         textContent: function (s) {
-          var tellSuccessMatrix = s.learnMatrix[0], 
+          var tellSuccessMatrix = s.learnMatrix[0],
 		      output = tellSuccessMatrix[1][0], i=0;
           for (i=1; i < tellSuccessMatrix[1].length; i++){
             output += " | " + tellSuccessMatrix[1][i];
@@ -278,7 +486,7 @@ sim.config.observationUI.objectViews = {
     { shapeName: "text",
       shapeAttributes: {
         textContent: function (s) {
-          var tellSuccessMatrix = s.learnMatrix[0], 
+          var tellSuccessMatrix = s.learnMatrix[0],
 		      output = tellSuccessMatrix[2][0], i=0;
           for (i=1; i < tellSuccessMatrix[2].length; i++){
             output += " | " + tellSuccessMatrix[2][i];
@@ -290,7 +498,7 @@ sim.config.observationUI.objectViews = {
       }
     },
   ],
-};
+};*/
 
 sim.model.statistics = {
   "jumpsNumber": {range:"NonNegativeInteger", label:"Nbr of jumps: ", computeOnlyAtEnd:false},

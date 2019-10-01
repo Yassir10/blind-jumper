@@ -5728,7 +5728,7 @@ sim.config.observationUI.spaceView = {
   }
 };
 // define the visualization record for non-spatial models
-sim.config.observationUI.vis = {SVG:{},Zdog:{}};
+sim.config.observationUI.vis = {SVG:{}};
 // define the objectViews definition map
 sim.config.observationUI.objectViews = {};
 // define the map for runtime objectViews
@@ -7445,7 +7445,7 @@ Improvements/extensions
 
 var oes = oes || {};
 oes.ui = oes.ui || {};
-oes.ui.vis = {SVG:{},Zdog:{}};  // name space for generic UI procedures/functions
+oes.ui.vis = {SVG:{}};  // name space for generic UI procedures/functions
 sim.ui = sim.ui || {};  // name space for scenario/model-specific UI settings
 
 // flag used to create UI variations for Client or Server version of the simulation
@@ -8884,9 +8884,9 @@ oes.ui.setupVisualization = function () {
         oes.ui.visualizeStep = oes.ui.vis.SVG.visualizeStep;
         break;
       case "Zdog":
-        oes.ui.setupCanvas = oes.ui.vis.Zdog.setup;
-        oes.ui.resetCanvas = oes.ui.vis.Zdog.reset;
-        oes.ui.visualizeStep = oes.ui.vis.Zdog.visualizeStep;
+        oes.ui.setupCanvas = zdogVis.setup;
+        oes.ui.resetCanvas = zdogVis.reset;
+        oes.ui.visualizeStep = zdogVis.visualizeStep;
         break;
       default:
         console.log("Invalid visualization type: "+ sim.config.observationUI.visualType);
@@ -8982,36 +8982,29 @@ oes.ui.vis.SVG.setup = function (containerEl) {
   if (objViews) {  // render initial object views
     Object.keys( objViews).forEach( function (viewId) {
       var el=null, shapeGroupEl=null, fp=null,
-          obj = sim.namedObjects[viewId],  // when viewId = objName
-          objView = objViews[viewId],   // objViews[obj.constructor.Name]
-          objViewItems = Array.isArray( objView) ? objView : [objView];
-      shapeGroupEl = svg.createGroup();
-      objViewItems.forEach( function (itemDefRec) {
-        var txt="";
-        if (itemDefRec.shapeName) {
-          if (itemDefRec.fillPatternImage) {
-            fp = itemDefRec.fillPatternImage;
+          obj = sim.namedObjects[viewId],
+          objView = objViews[viewId];  // objViews[obj.constructor.Name]
+      if (!Array.isArray( objView)) {  // single visual. item definition record
+        if (objView.shapeName) {
+          if (objView.fillPatternImage) {
+            fp = objView.fillPatternImage;
             if (!fp.file.includes("/")) {
               fp.file = oes.defaults.imgFolder + fp.file;
             }
             el = svg.createImageFillPattern( fp.id, fp.file);
             defsEl.appendChild( el);
-            itemDefRec.style = "fill: url(#" + fp.id + ");" + itemDefRec.style;
+            objView.style = "fill: url(#" + fp.id + ");" + objView.style;
           }
-          el = svg.createShapeFromDefRec( itemDefRec, obj);  // cannot be "image"
-          itemDefRec.element = el;
+          el = svg.createShapeFromDefRec( objView, obj);  // cannot be "image"
+          objView.element = el;
           canvasSvgEl.appendChild( el);
-        } else if (itemDefRec.text) {  // objViewItem defines a text element
-          if (typeof itemDefRec.text === "function") txt = itemDefRec.text( obj);
-          else txt = itemDefRec.text;
-          el = svg.createText( itemDefRec.x, itemDefRec.y, txt, itemDefRec.style)
-        } else {  // itemDefRec maps enum attribs to lists of visualization items
-          Object.keys( itemDefRec).forEach( function (key) {
+        } else {  // objView maps enum attribs to lists of visualization items
+          Object.keys( objView).forEach( function (key) {
             var enumIndex = 0, currentEnumViewDefRec = [];
             if (key !== "object" && key !== "element") {  // ommit special view fields
               enumIndex = obj[key];  // key is enum attr name
-              currentEnumViewDefRec = itemDefRec[key][enumIndex-1];
-              itemDefRec[key].forEach( function (shDefRec) {
+              currentEnumViewDefRec = objView[key][enumIndex-1];
+              objView[key].forEach( function (shDefRec) {
                 var el = oes.ui.vis.SVG.createShapeFromDefRec( shDefRec, obj);
                 el.style.display = "none";
                 shDefRec.element = el;
@@ -9020,14 +9013,38 @@ oes.ui.vis.SVG.setup = function (containerEl) {
                   sim.visualEl.style.backgroundColor = shDefRec.canvasBackgroundColor;
                 }
               });
-              itemDefRec[key].element = currentEnumViewDefRec.element;
+              objView[key].element = currentEnumViewDefRec.element;
               currentEnumViewDefRec.element.style.display = "block";
             }
           });
         }
-        shapeGroupEl.appendChild( el);
-      });
-      canvasSvgEl.appendChild( shapeGroupEl);
+      } else {  // objView is a list of vis item definition records
+        objView.elements = [];
+        shapeGroupEl = svg.createGroup();
+        objView.forEach( function (objViewItem) {
+          var txt="";
+          if (objViewItem.shapeName) {
+            if (objViewItem.fillPatternImage) {
+              fp = objViewItem.fillPatternImage;
+              if (!fp.file.includes("/")) {
+                fp.file = oes.defaults.imgFolder + fp.file;
+              }
+              el = svg.createImageFillPattern( fp.id, fp.file);
+              defsEl.appendChild( el);
+              objViewItem.style = "fill: url(#" + fp.id + ");" + objViewItem.style;
+            }
+            el = svg.createShape( objViewItem.shapeName,
+                objViewItem.shapeAttributes, objViewItem.style, obj);
+          } else {  // objViewItem defines a text element
+            if (typeof objViewItem.text === "function") txt = objViewItem.text( obj);
+            else txt = objViewItem.text;
+            el = svg.createText( objViewItem.x, objViewItem.y, txt, objViewItem.style)
+          }
+          objView.elements.push( el);
+          shapeGroupEl.appendChild( el);
+        });
+        canvasSvgEl.appendChild( shapeGroupEl);
+      }
     });
   }
 };
@@ -9045,7 +9062,7 @@ oes.ui.vis.SVG.visualizeStep = function () {
     // objViewItems is a list of view item definition records
     for (i=0; i < objViewItems.length; i++) {
       itemDefRec = objViewItems[i];
-      el = itemDefRec.element;
+      el = objViewItems.elements[i];
       if (itemDefRec.shapeName) {
         shAttribs = itemDefRec.shapeAttributes;
         Object.keys( shAttribs).forEach( function (attrName) {
@@ -9098,301 +9115,6 @@ oes.ui.vis.SVG.createShapeFromDefRec = function (shDefRec) {
     shDefRec.shapeAttributes.file = oes.defaults.imgFolder + fn;
   }
   return svg.createShapeFromDefRec( shDefRec);
-};
-/*====================================================================================
-    Z D O G
- ==================================================================================== */
-oes.ui.vis.Zdog.createShapeFromDefBox = function (shDefRec) {
-   var shAttribs = shDefRec.shapeAttributes;
-   var el = null;
-   var x = 0, y = 0, z = 0,
-    width = 0, height = 0, depth = 0,
-    color = "brown", stroke = 1, fill = true;
-   //shape attributes
-   Object.keys(shAttribs).forEach(
-     function(attrName){
-       var val;
-       if (typeof shAttribs[attrName] === "function") {
-         val = shAttribs[attrName](obj);
-       } else val = shAttribs[attrName];
-       switch (attrName){
-         case "x":
-           x = val;
-           break;
-         case "y":
-           y = val;
-           break;
-         case "z":
-           z = val;
-           break;
-         case "width":
-           width = val;
-           break;
-         case "height":
-           height = val;
-           break;
-         case "depth":
-           depth = val;
-           break;
-         case "color":
-           color = val;
-           break;
-         case "stroke":
-           stroke = val;
-           break;
-         case "fill":
-           fill = val;
-           break;
-         default:
-           break;
-       }
-     }
-   )
-
-   var anchor = new Zdog.Box(
-     {
-       //addTo: illo,
-       width: width,
-       depth: depth,
-       height: height,
-       color: color,
-       translate: {x: x, y: y, z: z},
-       stroke: stroke,
-       fill: fill,
-     }
-   )
-   el = anchor;
-   return el;
- };
- //Create shape using attributes of the shape
- oes.ui.vis.Zdog.createShapeFromDefPerson = function (shDefRec, obj) {
-  //return an array of queue objects
-  var shAttribs = shDefRec.shapeAttributes;
-  var el = [];
-  var x = 0, y = 0, z = 0,
-   diameter = 0, height = 0,
-   number = 0,
-   color = "darkblue", stroke = 1, fill = true;
-  //shape attributes
-  Object.keys(shAttribs).forEach(
-    function(attrName){
-      var val;
-      if (typeof shAttribs[attrName] === "function") {
-        val = shAttribs[attrName](obj);
-      } else val = shAttribs[attrName];
-      switch (attrName){
-        case "x":
-          x = val;
-          break;
-        case "y":
-          y = val;
-          break;
-        case "z":
-          z = val;
-          break;
-        case "diameter":
-          diameter = val;
-          break;
-        case "height":
-          height = val;
-          break;
-        case "number":
-          number = val;
-          break;
-        case "color":
-          color = val;
-          break;
-        case "stroke":
-          stroke = val;
-          break;
-        case "fill":
-          fill = val;
-          break;
-        default:
-          break;
-      }
-    }
-  );
-
-  var count = number;
-  for(var i=0;i<count;i++){
-    var anchor = new Zdog.Anchor(      {
-        //addTo:illo,
-        translate: {x: x - (i*30),y:y + 25,},
-      }
-    );
-    var cylinder = new Zdog.Cylinder(
-      {
-        addTo: anchor,
-        diameter: diameter,
-        length: height,
-        rotate: {x:  Zdog.TAU /4},
-        stroke: stroke,
-        color: color,
-        fill: fill,
-      }
-    );
-
-    var sphere = new Zdog.Hemisphere(
-      {
-        addTo: anchor,
-        diameter: diameter,
-        stroke: stroke,
-        color: color,
-        rotate: {x: Zdog.TAU /4},
-        translate: {y:-height/2},
-      }
-    );
-    el.push(anchor);
-  }
-  return el;
-};
-//
-oes.ui.vis.Zdog.setup = function (containerEl) {
-  var obsUI = sim.config.observationUI,
-      fixedElems = obsUI.fixedElements,
-      objViews = obsUI.objectViews;
-  //add a canvas to the document
-  var canvasWidth = obsUI.canvas.width || 600,
-   canvasHeight = obsUI.canvas.height || 400,
-   canvasSvgEl = svg.createSVG({id:"canvasZdog",
-      width: canvasWidth, height: canvasHeight});
-  var mainEl = document.querySelector("body > main");
-  // define SVG canvas
-  /*sim.visualEl = dom.createElement("div",{id:"visCanvas", classValues:"uiBlock"});
-  if (obsUI.canvas.style) sim.visualEl.style = obsUI.canvasStyle;
-  sim.visualEl.appendChild( canvasSvgEl);
-  mainEl.appendChild( sim.visualEl);*/
-
-  var svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svgElement.setAttributeNS(null, "height", canvasHeight);
-  svgElement.setAttributeNS(null, "width", canvasWidth);
-  svgElement.setAttributeNS(null, "class", "canvasZdog");
-
-  mainEl.appendChild(svgElement);
-
-  //add zdog groups to contain fixed elements and object views
-  oes.ui.vis.Zdog.illo = new Zdog.Illustration(
-    {
-      element: '.canvasZdog',
-      dragRotate: true,
-    }
-  );
-  oes.ui.vis.Zdog.group = new Zdog.Anchor(
-    {
-      addTo: oes.ui.vis.Zdog.illo,
-    }
-  );
-  //render fixed elements
-  if(fixedElems){
-    Object.keys(fixedElems).forEach(
-      function(id){
-        var el = null;
-        el = oes.ui.vis.Zdog.createShapeFromDefBox(fixedElems[id]);
-        // add fixed element to the main illustration
-        oes.ui.vis.Zdog.illo.addChild(el);
-      }
-    );
-  }
-  // render object views
-  if(objViews){
-    Object.keys(objViews).forEach(
-      function(viewId){
-        var el=null,
-         obj = sim.namedObjects[viewId],  // when viewId = objName
-         objView = objViews[viewId],   // objViews[obj.constructor.Name]
-         objViewItems = Array.isArray( objView) ? objView : [objView];  // eine Liste bilden
-        objViewItems.forEach(
-          function (itemDefRec){
-            if(itemDefRec.shapeName && itemDefRec.shapeName == "person"){
-              el = oes.ui.vis.Zdog.createShapeFromDefPerson(itemDefRec,obj);
-              itemDefRec.element = el;
-              Object.keys(el).forEach(
-                function(elementId){
-                  oes.ui.vis.Zdog.group.addChild(el[elementId]);
-                }
-              );
-            }
-            else if (itemDefRec.shapeName && itemDefRec.shapeName === "text"){
-              //el = document.createElementNS("http://www.w3.org/2000/svg" ,"text");
-              //el = document.createTextNode("text");
-              var shAttribs = itemDefRec.shapeAttributes;
-              Object.keys(shAttribs).forEach(
-                function(attrName){
-                  var val;
-                  if (typeof shAttribs[attrName] === "function") {
-                    val = shAttribs[attrName](obj);
-                  } else val = shAttribs[attrName];
-                  el[attrName] = val;
-                }
-              )
-              //zdogSVGElem = document.getElementsByTagName("svg")[0].appendChild(el);
-              itemDefRec.element = el;
-            }
-          }
-        );
-      }
-    );
-  }
-  oes.ui.vis.Zdog.illo.updateRenderGraph();
-};
-//
-oes.ui.vis.Zdog.visualizeStep = function () {
-   // get the array as el -> if it needs to be bigger add elements else remove elements from the array
-   var obsUI = sim.config.observationUI,
-      objViews = obsUI.objectViews;
-   // render object views
-   if(objViews){
-    Object.keys(objViews).forEach(
-      function(viewId){
-        var el=null,
-         obj = sim.namedObjects[viewId],  // when viewId = objName
-         objView = objViews[viewId],   // objViews[obj.constructor.Name]
-         objViewItems = Array.isArray( objView) ? objView : [objView];  // eine Liste bilden
-        objViewItems.forEach(
-          function (itemDefRec){
-            var oldElems = itemDefRec.element;
-            //remove old elements of zdog
-            Object.keys(oldElems).forEach(
-              function (oldElemId){
-                oes.ui.vis.Zdog.group.removeChild(oldElems[oldElemId]);
-              }
-            );
-            if(itemDefRec.shapeName && itemDefRec.shapeName == "person"){
-              el = oes.ui.vis.Zdog.createShapeFromDefPerson(itemDefRec,obj);
-              itemDefRec.element = el;
-              Object.keys(el).forEach(
-                function(elementId){
-                  oes.ui.vis.Zdog.group.addChild(el[elementId]);
-                }
-              );
-            }
-            else if (itemDefRec.shapeName && itemDefRec.shapeName === "text"){
-              //el = document.createElementNS("http://www.w3.org/2000/svg" ,"text");
-              //el = document.createTextNode("text");
-              var shAttribs = itemDefRec.shapeAttributes;
-              Object.keys(shAttribs).forEach(
-                function(attrName){
-                  var val;
-                  if (typeof shAttribs[attrName] === "function") {
-                    val = shAttribs[attrName](obj);
-                  } else val = shAttribs[attrName];
-                  el[attrName] = val;
-                }
-              )
-              //zdogSVGElem = document.getElementsByTagName("svg")[0].appendChild(el);
-              itemDefRec.element = el;
-            }
-          }
-        );
-      }
-    );
-   }
-   oes.ui.vis.Zdog.illo.updateRenderGraph();
-};
-//
-oes.ui.vis.Zdog.reset = function () {
-   oes.ui.vis.Zdog.visualizeStep();//TODO replace with reset code
 };
 /***********************************************************************
  Set up the User Interaction (UIA) Elements
