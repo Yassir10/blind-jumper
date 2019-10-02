@@ -1,13 +1,14 @@
 var zdogVis = {
+  NS: "http://www.w3.org/2000/svg",
 
   createShapeFromDefBox: function (shDef,obj) {
      var shAttribs = shDef.shapeAttributes;
      var el = null;
      var x = 0, y = 0, z = 0,
       width = 0, height = 0, depth = 0,
-      color = "#cccccc", leftFace = "#cbcbcb", rightFace = "#cbcbcb",
-      topFace = "#c0c0c0", bottomFace= "#c0c0c0",
-      frontFace = "#c4c4c4", rearFace = "#c4c4c4",
+      color = "#cccccc", leftFace = "", rightFace = "",
+      topFace = "", bottomFace= "",
+      frontFace = "", rearFace = "",
       stroke = 1, fill = true;
      //shape attributes
      Object.keys(shAttribs).forEach(
@@ -67,6 +68,20 @@ var zdogVis = {
          }
        }
      )
+     if(frontFace == "" && color.startsWith("#")) frontFace = color.slice(0, -1) + "9";
+     else frontFace = color;
+     if(rearFace == "" && color.startsWith("#")) rearFace = color.slice(0,-1) + "9";
+     else rearFace = color;
+     if(topFace == "" && color.startsWith("#")) topFace = color.slice(0,-1) + "e";
+     else topFace = color;
+     if(bottomFace == "" && color.startsWith("#")) bottomFace = color.slice(0,-1) + "e";
+     else bottomFace = color;
+     if(leftFace == "" && color.startsWith("#")) leftFace = color.slice(0,-1) + "0";
+     else leftFace = color;
+     if(rightFace == "" && color.startsWith("#")) rightFace = color.slice(0,-1) + "0";
+     else rightFace = color;
+
+
 
      var box = new Zdog.Box(
        {
@@ -238,15 +253,13 @@ var zdogVis = {
    );
    return cone;
  },
-  ///////////////////////////////////////+
-  createText: function (shDef, obj){
-    //return an array of queue objects
+
+ createText: function ( shDef, obj) {
+
     var shAttribs = shDef.shapeAttributes;
-    var el = [];
-    var x = 0, y = 0, z = 0,
-     fontSize = 0, textContent = "",
-     textAlign = "", textBaseline = "",
-     color = "black", stroke = 1, fill = true;
+    var el = null;
+    var x = 0, y = 0,
+     width = 0, height = 0, textContent = "", style = "";
     //shape attributes
     Object.keys(shAttribs).forEach(
       function(attrName){
@@ -261,53 +274,29 @@ var zdogVis = {
           case "y":
             y = val;
             break;
-          case "z":
-            z = val;
+          case "width":
+            width = val;
             break;
-          case "fontSize":
-            fontSize = val;
+          case "height":
+            height = val;
             break;
           case "textContent":
             textContent = val;
             break;
-          case "textAlign":
-            textAlign = val;
-            break;
-          case "textBaseline":
-            textBaseline = val;
-            break;
-          case "color":
-            color = val;
-            break;
-          case "stroke":
-            stroke = val;
-            break;
-          case "fill":
-            fill = val;
+          case "style":
+            style = val;
             break;
           default:
             break;
         }
       }
     );
-    let font = new Zdog.Font({
-       src: 'https://cdn.jsdelivr.net/gh/jaames/zfont/demo/fredokaone.ttf',
-    });
-
-    var text = new Zdog.Text(
-      {
-        translate: {x: x, y: y, z: z},
-        font: font,
-        fontSize: fontSize,
-        value: [textContent],
-        textAlign: textAlign,
-        textBaseline: textBaseline,
-        color: color,
-        stroke: stroke,
-        fill: fill,
-      }
-    );
-    return text;
+    var el = document.createElementNS( zdogVis.NS,"text");
+    el.textContent = textContent;
+    el.setAttribute("x", x);
+    el.setAttribute("y", y);
+    if (style) el.style = style;  // el.setAttribute("style", style);
+    return el;
   },
   ///////////////////////////////////////
   setup: function (containerEl) {
@@ -321,17 +310,26 @@ var zdogVis = {
      canvasSvgEl = svg.createSVG({id:"canvasZdog",
         width: canvasWidth, height: canvasHeight});
     var mainEl = document.querySelector("body > main");
-    var svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+
+    var svgElement = document.createElementNS(zdogVis.NS, "svg");
     svgElement.setAttributeNS(null, "height", canvasHeight);
     svgElement.setAttributeNS(null, "width", canvasWidth);
-    svgElement.setAttributeNS(null, "class", "canvasZdog");
 
+    var zdogSvgElement = document.createElementNS(zdogVis.NS, "svg");
+    zdogSvgElement.setAttributeNS(null, "height", canvasHeight);
+    zdogSvgElement.setAttributeNS(null, "width", canvasWidth);
+    zdogSvgElement.setAttributeNS(null, "class", "canvasZdog");
+
+    svgElement.appendChild(zdogSvgElement);
     mainEl.appendChild(svgElement);
 
     var initialRotationX = -Math.PI / 6, initialRotationY = -Math.PI / 6; initialRotationZ = 0;
-    if(obsUI.initialViewRotation.x) initialRotationX = obsUI.initialViewRotation.x;
-    if(obsUI.initialViewRotation.y) initialRotationY = obsUI.initialViewRotation.y;
-    if(obsUI.initialViewRotation.z) initialRotationZ = obsUI.initialViewRotation.z;
+    if(obsUI.initialViewRotation){
+      if(obsUI.initialViewRotation.x) initialRotationX = obsUI.initialViewRotation.x;
+      if(obsUI.initialViewRotation.y) initialRotationY = obsUI.initialViewRotation.y;
+      if(obsUI.initialViewRotation.z) initialRotationZ = obsUI.initialViewRotation.z;
+    }
+
 
 
     //add zdog Anchors to contain fixed elements and object views
@@ -383,18 +381,26 @@ var zdogVis = {
             function (itemDef){
               if(itemDef.shapeName && itemDef.shapeName == "box"){
                 el = zdogVis.createShapeFromDefBox(itemDef);
+                zdogVis.fixedAnchor.addChild(el);
               }
               else if(itemDef.shapeName && itemDef.shapeName == "cylinder"){
                 el = zdogVis.createShapeFromDefCylinder(itemDef);
+                zdogVis.fixedAnchor.addChild(el);
               }
               else if(itemDef.shapeName && itemDef.shapeName == "cone"){
                 el = zdogVis.createShapeFromDefCone(itemDef);
+                zdogVis.fixedAnchor.addChild(el);
               }
               else if(itemDef.shapeName && itemDef.shapeName == "text"){
                 el = zdogVis.createText(itemDef);
+                if(itemDef.style){
+                  el.setAttributeNS(null,"style",itemDef.style);
+                }
+                svgElement.appendChild(el);
+
               }
               itemDef.element = el;
-              zdogVis.fixedAnchor.addChild(el);
+
 
             }
           );
@@ -413,18 +419,26 @@ var zdogVis = {
             function (itemDef){
               if(itemDef.shapeName && itemDef.shapeName == "box"){
                 el = zdogVis.createShapeFromDefBox(itemDef,obj);
+                zdogVis.objAnchor.addChild(el);
               }
               else if(itemDef.shapeName && itemDef.shapeName == "cylinder"){
                 el = zdogVis.createShapeFromDefCylinder(itemDef,obj);
+                zdogVis.objAnchor.addChild(el);
               }
               else if(itemDef.shapeName && itemDef.shapeName == "cone"){
                 el = zdogVis.createShapeFromDefCone(itemDef,obj);
+                zdogVis.objAnchor.addChild(el);
               }
               else if(itemDef.shapeName && itemDef.shapeName == "text"){
                 el = zdogVis.createText(itemDef,obj);
+                if(itemDef.style){
+                  el.setAttributeNS(null,"style",itemDef.style);
+                }
+                svgElement.appendChild(el);
               }
               itemDef.element = el;
-              zdogVis.objAnchor.addChild(el);
+
+
 
             }
           );
@@ -447,26 +461,36 @@ var zdogVis = {
            obj = sim.namedObjects[viewId],  // when viewId = objName
            objView = objViews[viewId],   // objViews[obj.constructor.Name]
            objViewItems = Array.isArray( objView) ? objView : [objView];  // eine Liste bilden
+          var textContent = "";
           objViewItems.forEach(
             function (itemDef){
               var oldElem = itemDef.element;
-              //remove old elements of zdog
               zdogVis.objAnchor.removeChild(oldElem);
 
               if(itemDef.shapeName && itemDef.shapeName == "box"){
+
                 el = zdogVis.createShapeFromDefBox(itemDef,obj);
+                zdogVis.objAnchor.addChild(el);
               }
               else if(itemDef.shapeName && itemDef.shapeName == "cylinder"){
                 el = zdogVis.createShapeFromDefCylinder(itemDef,obj);
+                zdogVis.objAnchor.addChild(el);
               }
               else if(itemDef.shapeName && itemDef.shapeName == "cone"){
                 el = zdogVis.createShapeFromDefCone(itemDef,obj);
+                zdogVis.objAnchor.addChild(el);
               }
               else if(itemDef.shapeName && itemDef.shapeName == "text"){
-                el = zdogVis.createText(itemDef,obj);
+                if (typeof itemDef.shapeAttributes["textContent"] === "function") {
+
+                  textContent = itemDef.shapeAttributes["textContent"](obj);
+                } else textContent = itemDef.shapeAttributes["textContent"];
+                oldElem.textContent = textContent;
+                el = oldElem;
+                console.log("update Text = " + oldElem.textContent + " -> " + textContent + " ::: " + oldElem);
               }
               itemDef.element = el;
-              zdogVis.objAnchor.addChild(el);
+
             }
           );
         }

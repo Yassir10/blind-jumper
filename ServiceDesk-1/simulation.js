@@ -102,7 +102,7 @@ sim.config.observationUI.fixedElements = {
   "desk": {
     shapeName: "box",
     shapeAttributes: { x: 160, y: 100, z: -20, width: 50, height: 30, depth: 100,
-      color: "brown", stroke: 1, fill: true
+      color: "#a52a2a", stroke: 1, fill: true
     }
   }
 };
@@ -113,15 +113,14 @@ sim.config.observationUI.objectViews = {
         x: function (sd) {console.log(sd.queueLength); return Math.max( 0, 120 - sd.queueLength * 10);},
         y: 75, z: 0, height: 80,
         width: function (sd) {return sd.queueLength*25;},
-        color: "darkblue", stroke: 1, fill: true
+        color: "#aaaacc", stroke: 1, fill: true
       },
 
     },
     { shapeName: "text",
-      shapeAttributes: {x: 150, y: 75, z: 100,
-          textContent: function (sd) {return sd.queueLength.toString();},
-          fontSize:25, textAlign:"center",textBaseline:"middle", color: "black", stroke: 0.05, fill: true,
-      },
+      shapeAttributes: {x: 325, y: 250,
+          textContent: function (sd) {return sd.queueLength;}},
+      style:"font-size:14px; text-anchor:middle"
     }
   ]
 };

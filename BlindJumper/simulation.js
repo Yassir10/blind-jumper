@@ -75,7 +75,7 @@ sim.config.observationUI.fixedElements = {
       shapeAttributes: {
         x: 10, y: 260,
         width: 600, height: 1,
-        color: "grey", strokeWidth: 10,
+        color: "#808080", strokeWidth: 10,
       },
 
   },
@@ -108,62 +108,70 @@ sim.config.observationUI.fixedElements = {
         { shapeName: "text",
         shapeAttributes:{
           textContent: "A",
-          x:-290, y:-80,
-          fontSize:12, textBaseline:"middle",
+          x:79, y:42,
+          width:150, height:138,
+          style:"font-size:12px; text-anchor:middle;"
         }
       },
   "rowBJumper":
     { shapeName: "text",
         shapeAttributes:{
       textContent: "B",
-          x:-290, y:-60,
-          fontSize:12, textBaseline:"middle",
+      x:79, y:62,
+      width:150, height:138,
+      style:"font-size:12px; text-anchor:middle;"
     }
     },
   "rowCJumper":
     { shapeName: "text",
         shapeAttributes:{
       textContent: "C",
-          x:-290, y:-40,
-          fontSize:12, textBaseline:"middle",
+      x:79, y:82,
+      width:150, height:138,
+      style:"font-size:12px; text-anchor:middle;"
     }
     },
   "colsSpeaker":
     { shapeName: "text",
         shapeAttributes:{
       textContent: "1\xa0\xa0\xa0 | \xa0\xa0\xa0  2 \xa0\xa0|\xa0\xa0  3  \xa0\xa0\xa0|\xa0\xa0  4",
-          x:-270, y:-100,
-          fontSize:12, textBaseline:"middle",
+      x:160, y:17,
+      width:150, height:138,
+      style:"font-size:12px; text-anchor:middle;"
     }
     },
 "colsJumper":
     { shapeName: "text",
     shapeAttributes:{
   textContent: "A\xa0\xa0\xa0 | \xa0\xa0\xa0  B \xa0\xa0|\xa0\xa0  C ",
-      x:30, y:-100,
-      fontSize:12, textBaseline:"middle",
+  x:560, y:17,
+  width:150, height:138,
+  style:"font-size:12px; text-anchor:middle;"
 }
 },
   "row1Speaker":
      { shapeName: "text",
        shapeAttributes:{
        textContent: "1",
-       x:10, y:-80,
-       fontSize:12, textBaseline:"middle",
+       x:500, y:42,
+       width:150, height:138,
+       style:"font-size:12px; text-anchor:middle;"
      }
      },
   "row2Speaker": { shapeName: "text",
     shapeAttributes:{
       textContent: "2",
-      x:10, y:-60,
-      fontSize:12, textBaseline:"middle",
+      x:500, y:62,
+      width:150, height:138,
+      style:"font-size:12px; text-anchor:middle;"
     }
   },
   "row3Speaker":{ shapeName: "text",
       shapeAttributes:{
     textContent: "3",
-        x:10, y:-40,
-        fontSize:12, textBaseline:"middle",
+    x:500, y:82,
+    width:150, height:138,
+    style:"font-size:12px; text-anchor:middle;"
   }
   },
 
@@ -188,8 +196,9 @@ sim.config.observationUI.objectViews = {
           }
           return output;
         },
-        x:-270, y:-80,
-        fontSize:12, textBaseline:"middle",
+        x:160, y:42,
+        width:150, height:138,
+        style:"font-size:12px; text-anchor:middle;"
       }
 	},
     { shapeName: "text",
@@ -202,8 +211,9 @@ sim.config.observationUI.objectViews = {
           }
           return output;
         },
-        x: -270, y: -60,
-        fontSize:12, textBaseline:"middle",
+        x: 160, y: 62,
+        width: 150, height: 138,
+        style:"font-size:12px; text-anchor:middle;"
       }
     },
     { shapeName: "text",
@@ -216,8 +226,9 @@ sim.config.observationUI.objectViews = {
           }
           return output;
         },
-        x:-270, y:-40,
-        fontSize:12, textBaseline:"middle",
+        x:160, y:82,
+        width:150, height:138,
+        style:"font-size:12px; text-anchor:middle;"
       }}],
   "barrier": [
     { shapeName: "box",
@@ -227,7 +238,7 @@ sim.config.observationUI.objectViews = {
         height: 50,
         depth: 100,
         fill:true,
-        color: "grey",
+        color: "#808080",
       }
     }
   ],
@@ -248,7 +259,8 @@ sim.config.observationUI.objectViews = {
           }
           return output;
         },
-        x:40, y:-80, fontSize:12, textBaseline:"middle",
+        x:560, y:42, width:150, height:138,
+        style:"font-size:12px; text-anchor:middle;"
       }
     },
     { shapeName: "text",
@@ -261,7 +273,8 @@ sim.config.observationUI.objectViews = {
           }
           return output;
         },
-        x: 40, y: -60, fontSize:12, textBaseline:"middle",
+        x: 560, y: 62, width: 150, height: 138,
+        style:"font-size:12px; text-anchor:middle;"
       }
     },
     { shapeName: "text",
@@ -274,7 +287,8 @@ sim.config.observationUI.objectViews = {
           }
           return output;
         },
-        x:40, y:-40,fontSize:12, textBaseline:"middle",
+        x:560, y:82, width:150, height:138,
+        style:"font-size:12px; text-anchor:middle;"
       }
     },
   ],
