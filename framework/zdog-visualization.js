@@ -342,6 +342,26 @@ var zdogVis = {
         rotate: {x: initialRotationX,y: initialRotationY, z: initialRotationZ},
       }
     );
+
+    let dragStartRX, dragStartRY;
+    let minSize = Math.min( canvasWidth, canvasHeight );
+
+
+    new Zdog.Dragger({
+      startElement: svgElement,
+      onDragStart: function() {
+        isSpinning = false;
+        dragStartRX = zdogVis.illo.rotate.x;
+        dragStartRY = zdogVis.illo.rotate.y;
+        zdogVis.illo.updateRenderGraph();
+      },
+      onDragMove: function( pointer, moveX, moveY ) {
+        zdogVis.illo.rotate.x = dragStartRX - ( moveY / minSize * Zdog.TAU );
+        zdogVis.illo.rotate.y = dragStartRY - ( moveX / minSize * Zdog.TAU );
+        zdogVis.illo.updateRenderGraph();
+      },
+    });
+
     zdogVis.fixedAnchor = new Zdog.Anchor(
       {
         addTo: zdogVis.illo,
