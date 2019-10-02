@@ -67,6 +67,7 @@ sim.config.observationUI.type = "Zdog";
 sim.config.observationUI.canvas.width = 700;
 sim.config.observationUI.canvas.height = 300;
 sim.config.observationUI.canvas.style = "background-color:yellow";
+sim.config.observationUI.initialViewRotation = {y: Zdog.TAU/8};
 
 sim.config.observationUI.fixedElements = {
   "ground": {
@@ -83,6 +84,7 @@ sim.config.observationUI.fixedElements = {
     shapeAttributes:{
       x:-200,
       y:-50,
+      z:-20,
       width:140,
       height: 75,
       fill: true,
@@ -95,6 +97,7 @@ sim.config.observationUI.fixedElements = {
     shapeAttributes:{
       x:100,
       y:-50,
+      z:-20,
       width:140,
       height:75,
       fill: true,

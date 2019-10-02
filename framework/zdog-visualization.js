@@ -5,7 +5,10 @@ var zdogVis = {
      var el = null;
      var x = 0, y = 0, z = 0,
       width = 0, height = 0, depth = 0,
-      color = "brown", stroke = 1, fill = true;
+      color = "#cccccc", leftFace = "#cbcbcb", rightFace = "#cbcbcb",
+      topFace = "#c0c0c0", bottomFace= "#c0c0c0",
+      frontFace = "#c4c4c4", rearFace = "#c4c4c4",
+      stroke = 1, fill = true;
      //shape attributes
      Object.keys(shAttribs).forEach(
        function(attrName){
@@ -35,6 +38,24 @@ var zdogVis = {
            case "color":
              color = val;
              break;
+           case "frontFace":
+             frontFace = val;
+             break;
+           case "rearFace":
+             rearFace = val;
+             break;
+           case "topFace":
+             backFace = val;
+             break;
+           case "bottomFace":
+             bottomFace = val;
+             break;
+           case "leftFace":
+             leftFace = val;
+             break;
+           case "rightFace":
+             rightFace = val;
+             break;
            case "stroke":
              stroke = val;
              break;
@@ -56,6 +77,12 @@ var zdogVis = {
          translate: {x: x, y: y, z: z},
          stroke: stroke,
          fill: fill,
+         frontFace: frontFace,
+         rearFace: rearFace,
+         topFace: topFace,
+         bottomFace: bottomFace,
+         leftFace: leftFace,
+         rightFace: rightFace,
        }
      )
      return box;
@@ -68,7 +95,9 @@ var zdogVis = {
     var x = 0, y = 0, z = 0,
      diameter = 0, length = 0,
      xRotation = 0, yRotation = 0, zRotation = 0,
-     color = "darkblue", stroke = 1, fill = true;
+     color = "darkblue",
+     frontFace = "#c9c9c9", backface = "#c9c9c9",
+     stroke = 1, fill = true;
     //shape attributes
     Object.keys(shAttribs).forEach(
       function(attrName){
@@ -104,6 +133,12 @@ var zdogVis = {
           case "color":
             color = val;
             break;
+          case "frontFace":
+            frontFace = val;
+            break;
+          case "backface":
+            backface = val;
+            break;
           case "stroke":
             stroke = val;
             break;
@@ -124,6 +159,8 @@ var zdogVis = {
         stroke: stroke,
         color: color,
         fill: fill,
+        frontFace: frontFace,
+        backface: backface,
       }
     );
     return cylinder;
@@ -136,7 +173,8 @@ var zdogVis = {
    var x = 0, y = 0, z = 0,
     diameter = 0, length = 0,
     xRotation = 0, yRotation = 0, zRotation = 0,
-    color = "darkblue", stroke = 1, fill = true;
+    color = "darkblue", backface = "#c9c9c9",
+    stroke = 1, fill = true;
    //shape attributes
    Object.keys(shAttribs).forEach(
      function(attrName){
@@ -172,6 +210,9 @@ var zdogVis = {
          case "color":
            color = val;
            break;
+         case "backface":
+           backface = val;
+           break;
          case "stroke":
            stroke = val;
            break;
@@ -192,6 +233,7 @@ var zdogVis = {
        stroke: stroke,
        color: color,
        fill: fill,
+       backface: backface,
      }
    );
    return cone;
@@ -204,7 +246,7 @@ var zdogVis = {
     var x = 0, y = 0, z = 0,
      fontSize = 0, textContent = "",
      textAlign = "", textBaseline = "",
-     color = "darkblue", stroke = 1, fill = true;
+     color = "black", stroke = 1, fill = true;
     //shape attributes
     Object.keys(shAttribs).forEach(
       function(attrName){
@@ -279,12 +321,6 @@ var zdogVis = {
      canvasSvgEl = svg.createSVG({id:"canvasZdog",
         width: canvasWidth, height: canvasHeight});
     var mainEl = document.querySelector("body > main");
-    // define SVG canvas
-    /*sim.visualEl = dom.createElement("div",{id:"visCanvas", classValues:"uiBlock"});
-    if (obsUI.canvas.style) sim.visualEl.style = obsUI.canvasStyle;
-    sim.visualEl.appendChild( canvasSvgEl);
-    mainEl.appendChild( sim.visualEl);*/
-
     var svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svgElement.setAttributeNS(null, "height", canvasHeight);
     svgElement.setAttributeNS(null, "width", canvasWidth);
@@ -292,12 +328,18 @@ var zdogVis = {
 
     mainEl.appendChild(svgElement);
 
+    var initialRotationX = -Math.PI / 6, initialRotationY = -Math.PI / 6; initialRotationZ = 0;
+    if(obsUI.initialViewRotation.x) initialRotationX = obsUI.initialViewRotation.x;
+    if(obsUI.initialViewRotation.y) initialRotationY = obsUI.initialViewRotation.y;
+    if(obsUI.initialViewRotation.z) initialRotationZ = obsUI.initialViewRotation.z;
+
+
     //add zdog Anchors to contain fixed elements and object views
     zdogVis.illo = new Zdog.Illustration(
       {
         element: '.canvasZdog',
         dragRotate: true,
-        rotate: {x: -Math.PI / 6,y: -Math.PI / 6},
+        rotate: {x: initialRotationX,y: initialRotationY, z: initialRotationZ},
       }
     );
     zdogVis.fixedAnchor = new Zdog.Anchor(
@@ -415,11 +457,4 @@ var zdogVis = {
   reset: function () {
      zdogVis.visualizeStep();//TODO replace with reset code
   },
-  animate: async function () {
-    zdogVis.illo.updateRenderGraph();
-    // animate next frame
-    requestAnimationFrame( animate );
-  },
 };
-
-zdogVis.animate();
