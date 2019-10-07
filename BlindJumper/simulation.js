@@ -79,7 +79,7 @@ sim.config.observationUI.fixedElements = {
       },
 
   },
-  "MatrixJumper":{
+  /*"MatrixJumper":{
     shapeName: "box",
     shapeAttributes:{
       x:-200,
@@ -91,8 +91,8 @@ sim.config.observationUI.fixedElements = {
       color: "#f2e8d5", strokeWidth: 0,
     },
 
-  },
-  "MatrixSpeaker":{
+  },*/
+  /*"MatrixSpeaker":{
     shapeName: "box",
     shapeAttributes:{
       x:100,
@@ -103,7 +103,7 @@ sim.config.observationUI.fixedElements = {
       fill: true,
       color: "#f2e8d5", strokeWidth: 0,
     },
-  },
+  },*/
     "rowAJumper":
         { shapeName: "text",
         shapeAttributes:{
@@ -144,7 +144,7 @@ sim.config.observationUI.fixedElements = {
     { shapeName: "text",
     shapeAttributes:{
   textContent: "A\xa0\xa0\xa0 | \xa0\xa0\xa0  B \xa0\xa0|\xa0\xa0  C ",
-  x:560, y:17,
+  x:460, y:17,
   width:150, height:138,
   style:"font-size:12px; text-anchor:middle;"
 }
@@ -153,7 +153,7 @@ sim.config.observationUI.fixedElements = {
      { shapeName: "text",
        shapeAttributes:{
        textContent: "1",
-       x:500, y:42,
+       x:400, y:42,
        width:150, height:138,
        style:"font-size:12px; text-anchor:middle;"
      }
@@ -161,7 +161,7 @@ sim.config.observationUI.fixedElements = {
   "row2Speaker": { shapeName: "text",
     shapeAttributes:{
       textContent: "2",
-      x:500, y:62,
+      x:400, y:62,
       width:150, height:138,
       style:"font-size:12px; text-anchor:middle;"
     }
@@ -169,7 +169,7 @@ sim.config.observationUI.fixedElements = {
   "row3Speaker":{ shapeName: "text",
       shapeAttributes:{
     textContent: "3",
-    x:500, y:82,
+    x:400, y:82,
     width:150, height:138,
     style:"font-size:12px; text-anchor:middle;"
   }
@@ -178,12 +178,67 @@ sim.config.observationUI.fixedElements = {
 };
 sim.config.observationUI.objectViews = {
   "jumper": [
-      { shapeName: "cylinder",
+    {// body
+      shapeName: "cylinder",
       shapeAttributes: {
-        // left-upper corner (x,y)
+        // middle (x,y)
         x: function (j) { return - 270 + j.position * 62;},
         y:50, xRotation: Math.PI / 2,
-        length: 100, diameter: 30,
+        length: 55, diameter: 30,
+      }
+    },
+    {//left arm
+      shapeName: "cylinder",
+      shapeAttributes:
+      {
+        // middle (x,y)
+        x: function (j) { return - 270 + j.position * 62;},
+        y:45, z: 20,
+        xRotation: Math.PI / 2,
+        length: 45, diameter: 5,
+      }
+    },
+    {
+      shapeName: "cylinder",
+      shapeAttributes:
+      { //right arm
+        // middle (x,y)
+        x: function (j) { return - 270 + j.position * 62;},
+        y:45, z: -20,
+        xRotation: Math.PI / 2,
+        length: 45, diameter: 5,
+      }
+    },
+    {
+      shapeName: "cylinder",
+      shapeAttributes:
+      {//left leg
+        // middle (x,y)
+        x: function (j) { return - 270 + j.position * 62;},
+        y:90, z: 10,
+        xRotation: Math.PI / 2,
+        length: 40, diameter: 5,
+      }
+    },
+    {
+      shapeName: "cylinder",
+      shapeAttributes:
+      {//right leg
+        // middle (x,y)
+        x: function (j) { return - 270 + j.position * 62;},
+        y:90, z: -10,
+        xRotation: Math.PI / 2,
+        length: 40, diameter: 5,
+      }
+    },
+    {// head
+      shapeName: "cone",
+      shapeAttributes:
+      {
+        // middle (x,y)
+        x: function (j) { return - 270 + j.position * 62;},
+        y:15, xRotation: Math.PI / 2,
+        length: 15, diameter: 20,
       }
     },
     { shapeName: "text",
@@ -233,7 +288,7 @@ sim.config.observationUI.objectViews = {
   "barrier": [
     { shapeName: "box",
       shapeAttributes: {
-        x: -90, y: 80,  // left-upper corner (x,y)
+        x: function(b) {return -90 + (b.length * 25) }, y: 80,  // left-upper corner (x,y)
         width: function (b) {return b.length * 50;},
         height: 50,
         depth: 100,
@@ -259,7 +314,7 @@ sim.config.observationUI.objectViews = {
           }
           return output;
         },
-        x:560, y:42, width:150, height:138,
+        x:460, y:42, width:150, height:138,
         style:"font-size:12px; text-anchor:middle;"
       }
     },
@@ -273,7 +328,7 @@ sim.config.observationUI.objectViews = {
           }
           return output;
         },
-        x: 560, y: 62, width: 150, height: 138,
+        x: 460, y: 62, width: 150, height: 138,
         style:"font-size:12px; text-anchor:middle;"
       }
     },
@@ -287,7 +342,7 @@ sim.config.observationUI.objectViews = {
           }
           return output;
         },
-        x:560, y:82, width:150, height:138,
+        x:460, y:82, width:150, height:138,
         style:"font-size:12px; text-anchor:middle;"
       }
     },
