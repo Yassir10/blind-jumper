@@ -182,7 +182,7 @@ sim.config.observationUI.objectViews = {
       shapeName: "cylinder",
       shapeAttributes: {
         // middle (x,y)
-        x: function (j) { return - 165 + j.position * 60;},
+        x: function (j) { return -145 + j.position * 40;},
         y:50, xRotation: Math.PI / 2,
         length: 55, diameter: 25,
       }
@@ -192,7 +192,7 @@ sim.config.observationUI.objectViews = {
       shapeAttributes:
       {
         // middle (x,y)
-        x: function (j) { return - 165 + j.position * 60;},
+        x: function (j) { return -145 + j.position * 40;},
         y:45, z: 20,
         xRotation: Math.PI / 2,
         length: 45, diameter: 5,
@@ -203,7 +203,7 @@ sim.config.observationUI.objectViews = {
       shapeAttributes:
       { //right arm
         // middle (x,y)
-        x: function (j) { return - 165 + j.position * 60;},
+        x: function (j) { return -145 + j.position * 40;},
         y:45, z: -20,
         xRotation: Math.PI / 2,
         length: 45, diameter: 5,
@@ -214,7 +214,7 @@ sim.config.observationUI.objectViews = {
       shapeAttributes:
       {//left leg
         // middle (x,y)
-        x: function (j) { return - 165 + j.position * 60;},
+        x: function (j) { return -145 + j.position * 40;},
         y:90, z: 10,
         xRotation: Math.PI / 2,
         length: 40, diameter: 5,
@@ -225,7 +225,7 @@ sim.config.observationUI.objectViews = {
       shapeAttributes:
       {//right leg
         // middle (x,y)
-        x: function (j) { return - 165 + j.position * 60;},
+        x: function (j) {return -145 + j.position * 40;},
         y:90, z: -10,
         xRotation: Math.PI / 2,
         length: 40, diameter: 5,
@@ -236,7 +236,7 @@ sim.config.observationUI.objectViews = {
       shapeAttributes:
       {
         // middle (x,y)
-        x: function (j) { return - 165 + j.position * 60;},
+        x: function (j) { return -145 + j.position * 40;},
         y:15, xRotation: Math.PI / 2,
         length: 15, diameter: 20,
       }
@@ -288,8 +288,8 @@ sim.config.observationUI.objectViews = {
   "barrier": [
     { shapeName: "box",
       shapeAttributes: {
-        x: function(b) {return -90 + (b.length * 25) }, y: 80,  // left-upper corner (x,y)
-        width: function (b) {return b.length * 50;},
+        x: function(b) {return -90 + (b.length * 20) }, y: 80,  // left-upper corner (x,y)
+        width: function (b) {return b.length * 40;},
         height: 50,
         depth: 100,
         fill:true,
