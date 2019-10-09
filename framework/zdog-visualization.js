@@ -487,7 +487,7 @@ var zdogVis = {
                 } else textContent = itemDef.shapeAttributes["textContent"];
                 oldElem.textContent = textContent;
                 el = oldElem;
-                console.log("update Text = " + oldElem.textContent + " -> " + textContent + " ::: " + oldElem);
+                
               }
               itemDef.element = el;
 
